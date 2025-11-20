@@ -1,189 +1,273 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chia-Chi Lin (Linda) | Product Designer & UX Researcher</title>
+    <meta name="description" content="Portfolio of Chia-Chi Lin (Linda), a UX Designer and Researcher.">
+    <title>Chia-Chi Lin (Linda) | Product Designer</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* --- CSS Variables --- */
         :root {
-            --primary: #4f46e5; /* Indigo 600 */
-            --primary-dark: #4338ca;
-            --secondary: #ec4899; /* Pink 500 */
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
+            --md-sys-color-primary: #004FA1;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-secondary: #526070;
+            
+            --md-sys-color-background: #FDFBFF;
+            --md-sys-color-surface: #FFFFFF;
+            --md-sys-color-surface-container: #F0F4F9;
+            
+            --md-sys-color-on-surface: #1A1C1E;
+            --md-sys-color-on-surface-variant: #43474E;
+            
+            --md-sys-color-outline: #73777F;
+            --md-sys-color-outline-variant: #C3C7CF;
+            --md-sys-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            --md-sys-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            
+            --icon-bg-light: rgba(0, 79, 161, 0.08);
+            --nav-height: 64px;
+            --border-radius-card: 24px;
+            --border-radius-pill: 100px;
+            
+            --motion-easing-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        [data-theme="dark"] {
+            --md-sys-color-primary: #A8C7FA;
+            --md-sys-color-on-primary: #00315F;
+            --md-sys-color-background: #111318;
+            --md-sys-color-surface: #1E2126;
+            --md-sys-color-surface-container: #2B2F35;
+            --md-sys-color-on-surface: #E2E2E6;
+            --md-sys-color-on-surface-variant: #C4C6D0;
+            --md-sys-color-outline: #8D9199;
+            --md-sys-color-outline-variant: #444746;
+            --icon-bg-light: rgba(168, 199, 250, 0.15);
+            --md-sys-elevation-1: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-surface);
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-top: var(--nav-height);
+            -webkit-font-smoothing: antialiased;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: 0.3s;
+        *:focus-visible {
+            outline: 3px solid var(--md-sys-color-primary);
+            outline-offset: 4px;
+            border-radius: 4px;
         }
 
-        /* Layout & Containers */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* --- Language Switching --- */
+        .lang-zh { display: none; }
+        body[data-lang="en"] .lang-zh { display: none !important; }
+        body[data-lang="en"] .lang-en { display: inline-block; }
+        body[data-lang="en"] .lang-en { display: block; } 
+        body[data-lang="zh"] .lang-en { display: none !important; }
+        body[data-lang="zh"] .lang-zh { display: inline-block; }
+        body[data-lang="zh"] .lang-zh { display: block; }
+
+        /* --- Layout --- */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        section {
-            padding: 80px 0;
+        /* Strict Spacing Rules */
+        #skills, #experience, #education, #projects {
+            padding-top: 160px !important; 
+            padding-bottom: 60px;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 60px;
-            position: relative;
-            overflow: hidden;
+        #skills h2, #experience h2, #education h2, #projects h2 {
+            margin-top: 0;
+            margin-bottom: 48px !important;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            right: -5%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-            z-index: -1;
-        }
-
-        .tag {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
+        /* Typography */
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.12;
+            letter-spacing: -0.25px;
             margin-bottom: 24px;
-            letter-spacing: 0.5px;
+            color: var(--md-sys-color-on-surface);
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            color: #0f172a;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin-bottom: 40px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 16px;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--text-main);
-            color: white;
-            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-        }
-
-        .btn-primary:hover {
-            background: #0f172a;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: white;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-        }
-
-        .btn-outline:hover {
-            background: #f1f5f9;
-            border-color: var(--text-light);
-        }
-
-        /* Skills Section (Cards) */
-        .section-title {
+        h2 {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: 0px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        h3 {
+            font-size: 1.375rem;
+            font-weight: 500;
+            line-height: 1.27;
+            letter-spacing: 0px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+            color: var(--md-sys-color-on-surface-variant);
             margin-bottom: 16px;
         }
 
-        .section-desc {
-            color: var(--text-light);
-            margin-bottom: 48px;
-            max-width: 700px;
+        .btn, .date-badge, .md-chip {
+            font-size: 0.9rem;
+            letter-spacing: 0.1px;
+            font-weight: 500;
         }
 
-        .skills-grid {
+        /* --- Nav --- */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: color-mix(in srgb, var(--md-sys-color-surface), transparent 5%);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+        }
+
+        .nav-actions { display: flex; gap: 12px; }
+
+        .icon-btn {
+            background: transparent;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        /* --- Components --- */
+        .btn-group { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            padding: 0 24px;
+            border-radius: var(--border-radius-pill);
+            text-decoration: none;
+            gap: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-filled {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            box-shadow: var(--md-sys-elevation-1);
+        }
+        .btn-filled:hover {
+            box-shadow: var(--md-sys-elevation-2);
+            transform: translateY(-1px);
+        }
+
+        .btn-outlined {
+            background-color: transparent;
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-primary);
+        }
+        .btn-outlined:hover {
+            background-color: var(--icon-bg-light);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
         }
 
-        .skill-card {
-            background: var(--card-bg);
+        .md-card {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--border-radius-card);
             padding: 32px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s var(--motion-easing-emphasized), box-shadow 0.3s;
+        }
+        .md-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--md-sys-elevation-2);
+            border-color: var(--md-sys-color-primary);
         }
 
-        .skill-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.05);
-            border-color: #c7d2fe;
-        }
-
-        .icon-box {
+        .card-icon {
             width: 56px;
             height: 56px;
             border-radius: 16px;
+            background-color: var(--icon-bg-light);
+            color: var(--md-sys-color-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -191,305 +275,560 @@
             margin-bottom: 24px;
         }
 
-        /* Card Colors */
-        .card-design .icon-box { background: #e0e7ff; color: var(--primary); }
-        .card-data .icon-box { background: #dbeafe; color: #2563eb; }
-        .card-research .icon-box { background: #dcfce7; color: #16a34a; }
-        .card-pm .icon-box { background: #f3e8ff; color: #9333ea; }
-
-        .skill-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 16px; }
+        .md-chip {
+            background-color: var(--md-sys-color-surface-container);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: var(--md-sys-color-on-surface-variant);
         }
 
-        .skill-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin-bottom: 24px;
-            min-height: 48px;
+        .list-card {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--border-radius-card);
+            padding: 40px;
         }
 
-        .tags-container {
+        .list-item {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            gap: 40px;
+            padding-bottom: 40px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
         }
+        .list-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
 
-        .skill-tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: #f1f5f9;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        /* Experience Section */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin-top: 20px;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 32px;
-            margin-bottom: 48px;
-            position: relative;
-        }
-
-        .timeline-date {
-            min-width: 140px;
-            text-align: right;
-            padding-top: 4px;
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .timeline-content {
-            border-left: 2px solid var(--border);
-            padding-left: 32px;
-            padding-bottom: 16px;
-            position: relative;
-        }
-
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            left: -9px;
-            top: 6px;
-            width: 16px;
-            height: 16px;
-            background: white;
-            border: 4px solid var(--primary);
-            border-radius: 50%;
-        }
-
-        .job-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .company {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 12px;
+        .item-meta { min-width: 180px; flex-shrink: 0; }
+        .date-badge {
+            color: var(--md-sys-color-primary);
+            margin-bottom: 8px;
             display: block;
         }
-
-        .job-desc li {
-            margin-bottom: 8px;
-            color: var(--text-light);
-            font-size: 0.95rem;
-            list-style-type: none;
-            position: relative;
-            padding-left: 18px;
+        .location { 
+            font-size: 0.875rem; 
+            color: var(--md-sys-color-on-surface-variant); 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            letter-spacing: 0.25px; 
         }
 
-        .job-desc li::before {
-            content: '•';
-            color: var(--text-light);
-            position: absolute;
-            left: 0;
+        .item-content { flex-grow: 1; }
+        .org-name { 
+            font-weight: 500; 
+            color: var(--md-sys-color-secondary); 
+            margin-bottom: 16px; 
+            display: block; 
+            letter-spacing: 0.15px; 
         }
 
-        /* Footer */
+        ul.bullets {
+            list-style-type: disc;
+            padding-left: 20px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        ul.bullets li { 
+            font-size: 1rem;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px; 
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--md-sys-color-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+            letter-spacing: 0.1px;
+        }
+        .project-link:hover { text-decoration: underline; opacity: 0.8; }
+
+        /* --- Footer Layout Fix (Stacked Right) --- */
         footer {
-            background: #0f172a;
-            color: white;
-            padding: 60px 0;
+            background-color: var(--md-sys-color-surface-container);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            padding: 80px 0;
             margin-top: 60px;
         }
-
-        .footer-content {
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-end; /* Bottom Alignment */
         }
 
-        .footer-links a {
-            color: #94a3b8;
-            margin-left: 24px;
+        .footer-links-group {
+            display: flex;
+            flex-direction: column; /* Vertical Stack */
+            align-items: flex-end; /* Align Right */
+            gap: 12px;
         }
 
-        .footer-links a:hover {
-            color: white;
+        .footer-link {
+            color: var(--md-sys-color-on-surface-variant);
+            text-decoration: none;
+            letter-spacing: 0.1px;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.2s;
         }
+        .footer-link:hover { color: var(--md-sys-color-primary); }
 
-        /* Responsive */
+        /* Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s var(--motion-easing-emphasized), transform 0.6s var(--motion-easing-emphasized);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .hero-anim {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s var(--motion-easing-emphasized) forwards;
+        }
+        .d-1 { animation-delay: 0.1s; }
+        .d-2 { animation-delay: 0.2s; }
+        .d-3 { animation-delay: 0.4s; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* RWD */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .timeline-item { flex-direction: column; gap: 8px; }
-            .timeline-date { text-align: left; min-width: auto; }
-            .timeline-content { border-left: 2px solid var(--border); padding-left: 24px; margin-left: 8px; }
-            .timeline-content::before { left: -9px; }
-            .footer-content { flex-direction: column; gap: 24px; text-align: center; }
-            .footer-links a { margin: 0 12px; }
+            .container { padding: 0 20px; }
+            
+            #skills, #experience, #education, #projects { 
+                padding-top: 80px !important; 
+                padding-bottom: 40px; 
+            }
+            
+            .list-card { padding: 24px; }
+            .list-item { flex-direction: column; gap: 12px; }
+            .item-meta { min-width: auto; margin-bottom: 8px; }
+            .btn { width: 100%; }
+            h1 { font-size: 2.5rem; }
+            .nav-container { justify-content: space-between; }
+            
+            /* Footer Mobile: Stack vertical left */
+            .footer-container { flex-direction: column; align-items: flex-start; gap: 32px; }
+            .footer-links-group { align-items: flex-start; }
         }
     </style>
 </head>
-<body>
+<body data-lang="en">
+    
+    <a href="#main-content" class="skip-link" style="position:absolute; top:-100px; left:0; background:var(--md-sys-color-primary); color:white; padding:10px; z-index:9999;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to content</a>
 
-    <!-- Hero Section -->
-    <header class="hero container">
-        <div class="tag">UT Austin Information Studies 碩士生</div>
-        <h1>Hello, I'm <span>Linda Lin</span>.<br>Designing Data-Driven Experiences.</h1>
-        <p>結合 <b>UX 研究</b>、<b>數據分析</b> 與 <b>包容性設計</b>。<br>
-           擁有在 Synology 與 Taipei Metro 大型數位平台實戰經驗，擅長為複雜系統打造直覺的體驗。</p>
-        
-        <div class="btn-group">
-            <a href="mailto:cl54428@eid.utexas.edu" class="btn btn-primary">
-                <i class="fas fa-envelope"></i> 聯絡我
-            </a>
-            <a href="https://linda-in-design.framer.website/" target="_blank" class="btn btn-outline">
-                <i class="fas fa-external-link-alt"></i> 作品集
-            </a>
-            <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="btn btn-outline">
-                <i class="fab fa-linkedin"></i>
-            </a>
-        </div>
-    </header>
-
-    <!-- Skills Cards Section -->
-    <section class="container" id="skills">
-        <h2 class="section-title">專業技能核心</h2>
-        <p class="section-desc">不僅僅是介面設計，我運用數據驗證決策，並具備跨部門協作的大型專案管理能力。</p>
-        
-        <div class="skills-grid">
-            <!-- Card 1 -->
-            <div class="skill-card card-design">
-                <div class="icon-box"><i class="fas fa-pen-nib"></i></div>
-                <h3>UI/UX Design</h3>
-                <p>擅長從 Wireframe 到高保真原型的設計，注重易用性與視覺細節。</p>
-                <div class="tags-container">
-                    <span class="skill-tag">Figma</span>
-                    <span class="skill-tag">Adobe XD</span>
-                    <span class="skill-tag">Framer</span>
-                    <span class="skill-tag">Midjourney</span>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="skill-card card-data">
-                <div class="icon-box"><i class="fas fa-chart-line"></i></div>
-                <h3>Data Analytics</h3>
-                <p>運用數據驅動設計迭代，透過分析使用者行為優化 SEO 與參與度。</p>
-                <div class="tags-container">
-                    <span class="skill-tag">Google Analytics</span>
-                    <span class="skill-tag">MS Clarity</span>
-                    <span class="skill-tag">Power BI</span>
-                    <span class="skill-tag">SEO Strategy</span>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="skill-card card-research">
-                <div class="icon-box"><i class="fas fa-users"></i></div>
-                <h3>UX Research</h3>
-                <p>具備嚴謹的研究方法論，從訪談、易用性測試到 HRI 人機互動研究。</p>
-                <div class="tags-container">
-                    <span class="skill-tag">Usability Testing</span>
-                    <span class="skill-tag">Journey Mapping</span>
-                    <span class="skill-tag">A/B Testing</span>
-                    <span class="skill-tag">Accessibility</span>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="skill-card card-pm">
-                <div class="icon-box"><i class="fas fa-tasks"></i></div>
-                <h3>Project Strategy</h3>
-                <p>擁有跨國團隊協作經驗，能有效管理設計系統與開發進度。</p>
-                <div class="tags-container">
-                    <span class="skill-tag">Jira</span>
-                    <span class="skill-tag">Linear</span>
-                    <span class="skill-tag">ClickUp</span>
-                    <span class="skill-tag">Cross-functional</span>
-                </div>
+    <nav class="top-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Linda.Design</a>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="icon-btn" aria-label="Switch Language">
+                    <span class="lang-en" style="font-size: 0.9rem; font-weight:bold;">EN</span>
+                    <span class="lang-zh" style="font-size: 0.9rem; font-weight:bold;">文</span>
+                </button>
+                <button id="theme-toggle" class="icon-btn" aria-label="Switch to Dark Mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- Experience Section -->
-    <section class="container" style="background: white; border-radius: 24px; padding: 60px 40px; margin-bottom: 60px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-        <h2 class="section-title">工作與研究經歷</h2>
-        <p class="section-desc">從台北捷運的百萬用戶服務，到 Synology 的全球設計系統管理。</p>
+    <main id="main-content">
+        <!-- Hero -->
+        <header class="container" style="min-height: 85vh; display: flex; align-items: center;">
+            <div style="max-width: 800px;">
+                <div class="hero-anim">
+                    <span class="lang-en" style="display: inline-block; background: var(--icon-bg-light); color: var(--md-sys-color-primary); padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; margin-bottom: 24px;">MSIS Candidate at UT Austin</span>
+                    <span class="lang-zh" style="display: none; background: var(--icon-bg-light); color: var(--md-sys-color-primary); padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; margin-bottom: 24px;">UT Austin 資訊研究碩士生</span>
+                </div>
+                
+                <h1 class="hero-anim d-1 lang-en">Hi, I'm <span style="color: var(--md-sys-color-primary);">Linda Lin</span>.<br>Designing Data-Driven Experiences.</h1>
+                <h1 class="hero-anim d-1 lang-zh">嗨，我是 <span style="color: var(--md-sys-color-primary);">Linda Lin</span>。<br>打造數據驅動的使用者體驗。</h1>
+                
+                <p class="hero-anim d-2 lang-en" style="font-size: 1.125rem; max-width: 700px;">
+                    Graduate student at UT Austin with 7 years of UX experience. <br>
+                    Specialized in <b>data-driven UX</b>, <b>digital accessibility</b>, <b>inclusive design</b>, and <b>Agile methodologies</b>.
+                </p>
+                <p class="hero-anim d-2 lang-zh" style="font-size: 1.125rem; max-width: 700px;">
+                    目前就讀於 UT Austin，擁有 7 年 UX 設計經驗。<br>
+                    專注於 <b>數據驅動設計</b>、<b>數位無障礙 (Accessibility)</b>、<b>包容性設計</b> 以及 <b>敏捷開發 (Agile)</b> 流程。
+                </p>
+                
+                <div class="btn-group hero-anim d-3">
+                    <a href="mailto:cl54428@eid.utexas.edu" class="btn btn-filled">
+                        <i class="fas fa-envelope" aria-hidden="true"></i> 
+                        <span class="lang-en">Contact Me</span>
+                        <span class="lang-zh">聯絡我</span>
+                    </a>
+                    <a href="https://linda-in-design.framer.website/" target="_blank" class="btn btn-outlined">
+                        <span class="lang-en">Portfolio</span>
+                        <span class="lang-zh">作品集</span>
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="btn btn-outlined" style="width: 48px; padding: 0;">
+                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
 
-        <div class="timeline">
+        <!-- Skills -->
+        <section class="container" id="skills">
+            <h2 class="reveal lang-en">Core Competencies</h2>
+            <h2 class="reveal lang-zh">核心能力</h2>
             
-            <!-- Job 1 -->
-            <div class="timeline-item">
-                <div class="timeline-date">2021/04 - 2025/07</div>
-                <div class="timeline-content">
-                    <h3 class="job-title">Design Coordinator</h3>
-                    <span class="company">Synology | Taipei, Taiwan</span>
-                    <ul class="job-desc">
-                        <li>管理與優化內部數位設計平台，每年產出超過 270 個網站，與歐美亞全球團隊緊密協作。</li>
-                        <li>透過系統化專案追蹤與 SEO 策略，在 10 個月內提升 40% 的全球平台參與度。</li>
-                        <li>運用 Google Analytics 與 Clarity 數據分析，持續改善無障礙設計與溝通成效。</li>
-                    </ul>
+            <div class="grid-container reveal">
+                <!-- Card 1 -->
+                <div class="md-card">
+                    <div class="card-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></div>
+                    <h3 class="lang-en">UI/UX Design</h3>
+                    <h3 class="lang-zh">UI/UX 設計</h3>
+                    <p class="lang-en">Creating inclusive prototypes and design systems with a focus on WCAG usability standards.</p>
+                    <p class="lang-zh">打造符合 WCAG 易用性標準的包容性原型與設計系統，注重視覺美感與操作直覺。</p>
+                    <div class="chips-wrap"><span class="md-chip">Figma</span><span class="md-chip">Adobe Suite</span><span class="md-chip">Miro</span></div>
+                </div>
+                <!-- Card 2 -->
+                <div class="md-card">
+                    <div class="card-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                    <h3 class="lang-en">Data Analytics</h3>
+                    <h3 class="lang-zh">數據分析</h3>
+                    <p class="lang-en">Producing data-driven reports to identify accessibility barriers and optimize platform engagement.</p>
+                    <p class="lang-zh">透過數據分析產出報告，識別無障礙障礙點並優化平台參與度與 SEO 排名。</p>
+                    <div class="chips-wrap"><span class="md-chip">GA4</span><span class="md-chip">MS Clarity</span><span class="md-chip">Hotjar</span></div>
+                </div>
+                <!-- Card 3 -->
+                <div class="md-card">
+                    <div class="card-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
+                    <h3 class="lang-en">UX Research</h3>
+                    <h3 class="lang-zh">使用者研究</h3>
+                    <p class="lang-en">Conducting accessibility-focused research, usability testing, and Biometric UX (eye tracking).</p>
+                    <p class="lang-zh">執行專注於無障礙設計的研究、易用性測試以及生物識別 UX（眼動追蹤）。</p>
+                    <div class="chips-wrap"><span class="md-chip">Usability Testing</span><span class="md-chip">Eye Tracking</span><span class="md-chip">Audits</span></div>
+                </div>
+                <!-- Card 4 -->
+                <div class="md-card">
+                    <div class="card-icon"><i class="fas fa-sync-alt" aria-hidden="true"></i></div>
+                    <h3 class="lang-en">Agile Strategy</h3>
+                    <h3 class="lang-zh">敏捷策略</h3>
+                    <p class="lang-en">Collaborating with cross-functional global teams to design scalable, user-centered solutions.</p>
+                    <p class="lang-zh">與跨職能全球團隊協作，設計可擴展且以使用者為中心的解決方案。</p>
+                    <div class="chips-wrap"><span class="md-chip">Agile</span><span class="md-chip">Project Mgmt</span><span class="md-chip">Cross-functional</span></div>
                 </div>
             </div>
+        </section>
 
-            <!-- Job 2 -->
-            <div class="timeline-item">
-                <div class="timeline-date">2023/04 - 2023/10</div>
-                <div class="timeline-content">
-                    <h3 class="job-title">UX Designer (Contractor)</h3>
-                    <span class="company">Taipei Metro (台北捷運) | Taipei, Taiwan</span>
-                    <ul class="job-desc">
-                        <li>負責日均流量 200 萬+ 的數位服務設計，產出 Wireframe、Flow 與高保真原型。</li>
-                        <li>與多元團隊合作，針對廣大受眾優化溝通清晰度，落實包容性設計解決方案。</li>
-                    </ul>
+        <!-- Work Experience -->
+        <section class="container" id="experience">
+            <h2 class="reveal lang-en">Work Experience</h2>
+            <h2 class="reveal lang-zh">工作經歷</h2>
+
+            <div class="list-card reveal">
+                <!-- Job 1 -->
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Apr 2021 - Jul 2025</span>
+                        <span class="date-badge lang-zh">2021年4月 - 2025年7月</span>
+                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Taipei, Taiwan</span>
+                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，台北</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">Design Coordinator</h3>
+                        <h3 class="lang-zh">設計協調員</h3>
+                        <span class="org-name lang-en">Synology Inc.</span>
+                        <span class="org-name lang-zh">群暉科技 (Synology)</span>
+                        <ul class="bullets lang-en">
+                            <li>Collaborated with global marketing and engineering teams to enhance digital accessibility across 270+ digital assets annually.</li>
+                            <li>Led end-to-end UX redesign of Synology’s tutorial page, resulting in <b>73x growth in unique visitors</b>.</li>
+                            <li>Integrated Google Analytics 4 and Hotjar to identify accessibility barriers, producing data-driven reports aligned with WCAG.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>與全球行銷與工程團隊合作，每年管理並優化超過 270 個數位資產的無障礙體驗。</li>
+                            <li>主導 Synology 教學頁面的端對端 UX 改版，使不重複訪客數成長 <b>73 倍</b>。</li>
+                            <li>整合 GA4 與 Hotjar 識別無障礙障礙，產出符合 WCAG 標準的數據驅動改善報告。</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Job 2 -->
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Apr 2023 - Oct 2023</span>
+                        <span class="date-badge lang-zh">2023年4月 - 2023年10月</span>
+                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Taipei, Taiwan</span>
+                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，台北</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">UX Designer (Contractor)</h3>
+                        <h3 class="lang-zh">UX 設計師 (約聘)</h3>
+                        <span class="org-name lang-en">Taipei Metro</span>
+                        <span class="org-name lang-zh">台北捷運 (Taipei Metro)</span>
+                        <ul class="bullets lang-en">
+                            <li>Conducted accessibility-focused user research and usability testing for a portal serving 2M+ daily users.</li>
+                            <li>Created high-fidelity prototypes in Figma, ensuring inclusive navigation patterns and screen reader compatibility, raising app rating by 15.8%.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>針對日均 200 萬用戶的入口網站，執行專注於無障礙設計的使用者研究與易用性測試。</li>
+                            <li>使用 Figma 製作高保真原型，確保導航模式具包容性並相容螢幕閱讀器，提升 App 評分 15.8%。</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Job 3 -->
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Feb 2020 - Mar 2021</span>
+                        <span class="date-badge lang-zh">2020年2月 - 2021年3月</span>
+                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Taipei, Taiwan</span>
+                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，台北</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">Color Material Finish Engineer</h3>
+                        <h3 class="lang-zh">CMF 工程師</h3>
+                        <span class="org-name lang-en">Clevo</span>
+                        <span class="org-name lang-zh">藍天電腦 (Clevo)</span>
+                        <ul class="bullets lang-en">
+                            <li>Developed color systems with improved visibility and ergonomic comfort across device categories.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>跨部門合作開發色彩系統，提升硬體介面的視覺辨識度與人體工學舒適度。</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Job 4 -->
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Mar 2019 - Jun 2019</span>
+                        <span class="date-badge lang-zh">2019年3月 - 2019年6月</span>
+                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Taipei, Taiwan</span>
+                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，台北</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">UI/UX Design Intern</h3>
+                        <h3 class="lang-zh">UI/UX 設計實習生</h3>
+                        <span class="org-name lang-en">Fubon Financial</span>
+                        <span class="org-name lang-zh">富邦金控</span>
+                        <ul class="bullets lang-en">
+                            <li>Assisted in responsive wireframe design and RWD accessibility testing for Fubon Bank’s mobile app.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>協助富邦銀行行動 App 的響應式 Wireframe 設計與 RWD 無障礙測試。</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Job 3 -->
-            <div class="timeline-item">
-                <div class="timeline-date">2025/08 - Current</div>
-                <div class="timeline-content">
-                    <h3 class="job-title">Research Assistant</h3>
-                    <span class="company">UT Austin HRI Team | Austin, USA</span>
-                    <ul class="job-desc">
-                        <li>協助人機互動 (Human-Robot Interaction) 研究，負責實驗設計、執行與參與者招募。</li>
-                        <li>協調團隊進行互動設計開發與學術研究數據收集。</li>
-                    </ul>
+        <!-- Education Section -->
+        <section class="container" id="education">
+            <h2 class="reveal lang-en">Education</h2>
+            <h2 class="reveal lang-zh">學歷</h2>
+            
+            <div class="list-card reveal">
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Exp. May 2027</span>
+                        <span class="date-badge lang-zh">預計 2027年5月 畢業</span>
+                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Austin, USA</span>
+                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 美國，奧斯汀</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">Master of Science in Information Studies (UX Track)</h3>
+                        <h3 class="lang-zh">資訊研究理學碩士 (UX 組)</h3>
+                        <span class="org-name lang-en">The University of Texas at Austin</span>
+                        <span class="org-name lang-zh">德州大學奧斯汀分校 (UT Austin)</span>
+                        <p class="lang-en" style="font-size: 0.9rem; margin-bottom: 8px;">
+                            <i class="fas fa-book-open" style="margin-right: 8px; color: var(--md-sys-color-primary);"></i>
+                            Coursework: Biometric UX, Info Architecture, Accessibility Design.
+                        </p>
+                        <p class="lang-zh" style="font-size: 0.9rem; margin-bottom: 8px;">
+                            <i class="fas fa-book-open" style="margin-right: 8px; color: var(--md-sys-color-primary);"></i>
+                            修課內容：生物識別 UX、資訊架構、無障礙設計。
+                        </p>
+                        <ul class="bullets lang-en">
+                            <li>Served as UX Design Lead for UT student volunteer group creating public services.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>擔任 UT 學生志願團隊的 UX 設計負責人，開發公共服務專案。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Sep 2013 - Jun 2017</span>
+                        <span class="date-badge lang-zh">2013年9月 - 2017年6月</span>
+                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Kaohsiung, Taiwan</span>
+                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，高雄</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">Bachelor in Industrial Design</h3>
+                        <h3 class="lang-zh">工業設計學士</h3>
+                        <span class="org-name lang-en">National Kaohsiung Normal University</span>
+                        <span class="org-name lang-zh">國立高雄師範大學</span>
+                        <p class="lang-en" style="font-size: 0.9rem; opacity: 0.8;">Awarded $50,000 USD scholarship for advanced study in Design.</p>
+                        <p class="lang-zh" style="font-size: 0.9rem; opacity: 0.8;">獲得 50,000 美元獎學金前往美國 College for Creative Studies 進修設計。</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Education -->
-            <div class="timeline-item">
-                <div class="timeline-date">Exp. May 2027</div>
-                <div class="timeline-content">
-                    <h3 class="job-title">Master of Science in Information Studies</h3>
-                    <span class="company">The University of Texas at Austin | UX & Project Strategy Track</span>
-                    <ul class="job-desc">
-                        <li>專攻 UX 研究與資訊架構。</li>
-                        <li>擔任 UT Marketplace 學生志願團隊的 UX Design Lead。</li>
-                    </ul>
+        <!-- UX Projects Section -->
+        <section class="container" id="projects">
+            <h2 class="reveal lang-en">UX Projects</h2>
+            <h2 class="reveal lang-zh">UX 專案</h2>
+            
+            <div class="list-card reveal">
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Jun 2021 - Jun 2025</span>
+                        <span class="date-badge lang-zh">2021年6月 - 2025年6月</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>
+                            <a href="https://linda-in-design.framer.website/projects/004-web" target="_blank" class="project-link">
+                                <span class="lang-en">Synology Design Site</span>
+                                <span class="lang-zh">Synology Design Site</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </h3>
+                        <ul class="bullets lang-en">
+                            <li>Led a comprehensive inclusive design system overhaul, increasing site engagement by 46%.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>主導全面的包容性設計系統重構，整合全球設計資源與文件，提升網站參與度 46%。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Jan 2024 - Dec 2024</span>
+                        <span class="date-badge lang-zh">2024年1月 - 2024年12月</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>
+                            <a href="https://linda-in-design.framer.website/projects/003-web" target="_blank" class="project-link">
+                                <span class="lang-en">Synology Video Tutorial Site</span>
+                                <span class="lang-zh">Synology Video Tutorial Site</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </h3>
+                        <ul class="bullets lang-en">
+                            <li>Consolidated global design resources and accessibility documentation, boosting engagement.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>整合全球設計資源與無障礙文件，成功提升使用者參與度。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Jan 2023 - Oct 2023</span>
+                        <span class="date-badge lang-zh">2023年1月 - 2023年10月</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>
+                            <a href="https://linda-in-design.framer.website/projects/001-app" target="_blank" class="project-link">
+                                <span class="lang-en">Taipei Metro App Redesign</span>
+                                <span class="lang-zh">台北捷運 App 改版</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </h3>
+                        <ul class="bullets lang-en">
+                            <li>Designed inclusive user flows and wireframes, improving wayfinding for 2M+ daily riders.</li>
+                        </ul>
+                        <ul class="bullets lang-zh">
+                            <li>設計具包容性的使用者流程與 Wireframe，改善 200 萬以上日均乘客的尋路體驗。</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <div class="container footer-content">
+        <div class="container footer-container">
             <div>
-                <h3>Chia-Chi Lin (Linda)</h3>
-                <p style="font-size: 0.9rem; opacity: 0.7;">Based in Austin, TX • Open for Internship Opportunities</p>
+                <h3 style="margin-bottom: 8px; font-size: 1.2rem;">Chia-Chi Lin (Linda)</h3>
+                <p class="lang-en" style="font-size: 0.9rem; color: var(--md-sys-color-outline);">Based in Austin, TX • Open for Internship Opportunities</p>
+                <p class="lang-zh" style="font-size: 0.9rem; color: var(--md-sys-color-outline);">居住於美國奧斯汀 • 開放實習機會</p>
             </div>
-            <div class="footer-links">
-                <a href="https://linda-in-design.framer.website/">Portfolio</a>
-                <a href="https://www.linkedin.com/in/linda-lin-design/">LinkedIn</a>
-                <a href="mailto:cl54428@eid.utexas.edu">Email</a>
+            
+            <!-- Vertical Stack Alignment (Right Side) -->
+            <div class="footer-links-group">
+                <a href="https://linda-in-design.framer.website/" target="_blank" class="footer-link">
+                    <span class="lang-en">Portfolio</span>
+                    <span class="lang-zh">作品集</span>
+                </a>
+                <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="footer-link">LinkedIn</a>
+                <!-- Fixed Email Link -->
+                <a href="mailto:cl54428@eid.utexas.edu" class="footer-link">Email</a>
             </div>
         </div>
     </footer>
 
+    <script>
+        // --- Theme Management ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeBtn.querySelector('i');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeBtn.setAttribute('aria-label', 'Switch to Light Mode');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeBtn.setAttribute('aria-label', 'Switch to Dark Mode');
+            }
+        }
+
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) { setTheme('dark'); }
+
+        themeBtn.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // --- Language Toggle Management ---
+        const langBtn = document.getElementById('lang-toggle');
+        const body = document.body;
+        const savedLang = localStorage.getItem('lang') || 'en';
+        body.setAttribute('data-lang', savedLang);
+
+        langBtn.addEventListener('click', () => {
+            const currentLang = body.getAttribute('data-lang');
+            const newLang = currentLang === 'en' ? 'zh' : 'en';
+            body.setAttribute('data-lang', newLang);
+            localStorage.setItem('lang', newLang);
+        });
+
+        // --- Scroll Reveal Observer ---
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReducedMotion) {
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            revealElements.forEach(el => observer.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+        }
+    </script>
 </body>
 </html>
