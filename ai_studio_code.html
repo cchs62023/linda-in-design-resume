@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia-Chi Lin (Linda) | Product Designer & UX Researcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5; /* Indigo 600 */
+            --primary-dark: #4338ca;
+            --secondary: #ec4899; /* Pink 500 */
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        /* Layout & Containers */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: #0f172a;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: white;
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: var(--text-light);
+        }
+
+        /* Skills Section (Cards) */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            color: var(--text-light);
+            margin-bottom: 48px;
+            max-width: 700px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.05);
+            border-color: #c7d2fe;
+        }
+
+        .icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+
+        /* Card Colors */
+        .card-design .icon-box { background: #e0e7ff; color: var(--primary); }
+        .card-data .icon-box { background: #dbeafe; color: #2563eb; }
+        .card-research .icon-box { background: #dcfce7; color: #16a34a; }
+        .card-pm .icon-box { background: #f3e8ff; color: #9333ea; }
+
+        .skill-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .skill-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            min-height: 48px;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .timeline-date {
+            min-width: 140px;
+            text-align: right;
+            padding-top: 4px;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .timeline-content {
+            border-left: 2px solid var(--border);
+            padding-left: 32px;
+            padding-bottom: 16px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+        }
+
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .company {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .job-desc li {
+            margin-bottom: 8px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            list-style-type: none;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .job-desc li::before {
+            content: '•';
+            color: var(--text-light);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 60px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            margin-left: 24px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .timeline-item { flex-direction: column; gap: 8px; }
+            .timeline-date { text-align: left; min-width: auto; }
+            .timeline-content { border-left: 2px solid var(--border); padding-left: 24px; margin-left: 8px; }
+            .timeline-content::before { left: -9px; }
+            .footer-content { flex-direction: column; gap: 24px; text-align: center; }
+            .footer-links a { margin: 0 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero container">
+        <div class="tag">UT Austin Information Studies 碩士生</div>
+        <h1>Hello, I'm <span>Linda Lin</span>.<br>Designing Data-Driven Experiences.</h1>
+        <p>結合 <b>UX 研究</b>、<b>數據分析</b> 與 <b>包容性設計</b>。<br>
+           擁有在 Synology 與 Taipei Metro 大型數位平台實戰經驗，擅長為複雜系統打造直覺的體驗。</p>
+        
+        <div class="btn-group">
+            <a href="mailto:cl54428@eid.utexas.edu" class="btn btn-primary">
+                <i class="fas fa-envelope"></i> 聯絡我
+            </a>
+            <a href="https://linda-in-design.framer.website/" target="_blank" class="btn btn-outline">
+                <i class="fas fa-external-link-alt"></i> 作品集
+            </a>
+            <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="btn btn-outline">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Skills Cards Section -->
+    <section class="container" id="skills">
+        <h2 class="section-title">專業技能核心</h2>
+        <p class="section-desc">不僅僅是介面設計，我運用數據驗證決策，並具備跨部門協作的大型專案管理能力。</p>
+        
+        <div class="skills-grid">
+            <!-- Card 1 -->
+            <div class="skill-card card-design">
+                <div class="icon-box"><i class="fas fa-pen-nib"></i></div>
+                <h3>UI/UX Design</h3>
+                <p>擅長從 Wireframe 到高保真原型的設計，注重易用性與視覺細節。</p>
+                <div class="tags-container">
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">Adobe XD</span>
+                    <span class="skill-tag">Framer</span>
+                    <span class="skill-tag">Midjourney</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="skill-card card-data">
+                <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                <h3>Data Analytics</h3>
+                <p>運用數據驅動設計迭代，透過分析使用者行為優化 SEO 與參與度。</p>
+                <div class="tags-container">
+                    <span class="skill-tag">Google Analytics</span>
+                    <span class="skill-tag">MS Clarity</span>
+                    <span class="skill-tag">Power BI</span>
+                    <span class="skill-tag">SEO Strategy</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="skill-card card-research">
+                <div class="icon-box"><i class="fas fa-users"></i></div>
+                <h3>UX Research</h3>
+                <p>具備嚴謹的研究方法論，從訪談、易用性測試到 HRI 人機互動研究。</p>
+                <div class="tags-container">
+                    <span class="skill-tag">Usability Testing</span>
+                    <span class="skill-tag">Journey Mapping</span>
+                    <span class="skill-tag">A/B Testing</span>
+                    <span class="skill-tag">Accessibility</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="skill-card card-pm">
+                <div class="icon-box"><i class="fas fa-tasks"></i></div>
+                <h3>Project Strategy</h3>
+                <p>擁有跨國團隊協作經驗，能有效管理設計系統與開發進度。</p>
+                <div class="tags-container">
+                    <span class="skill-tag">Jira</span>
+                    <span class="skill-tag">Linear</span>
+                    <span class="skill-tag">ClickUp</span>
+                    <span class="skill-tag">Cross-functional</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="container" style="background: white; border-radius: 24px; padding: 60px 40px; margin-bottom: 60px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+        <h2 class="section-title">工作與研究經歷</h2>
+        <p class="section-desc">從台北捷運的百萬用戶服務，到 Synology 的全球設計系統管理。</p>
+
+        <div class="timeline">
+            
+            <!-- Job 1 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2021/04 - 2025/07</div>
+                <div class="timeline-content">
+                    <h3 class="job-title">Design Coordinator</h3>
+                    <span class="company">Synology | Taipei, Taiwan</span>
+                    <ul class="job-desc">
+                        <li>管理與優化內部數位設計平台，每年產出超過 270 個網站，與歐美亞全球團隊緊密協作。</li>
+                        <li>透過系統化專案追蹤與 SEO 策略，在 10 個月內提升 40% 的全球平台參與度。</li>
+                        <li>運用 Google Analytics 與 Clarity 數據分析，持續改善無障礙設計與溝通成效。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2023/04 - 2023/10</div>
+                <div class="timeline-content">
+                    <h3 class="job-title">UX Designer (Contractor)</h3>
+                    <span class="company">Taipei Metro (台北捷運) | Taipei, Taiwan</span>
+                    <ul class="job-desc">
+                        <li>負責日均流量 200 萬+ 的數位服務設計，產出 Wireframe、Flow 與高保真原型。</li>
+                        <li>與多元團隊合作，針對廣大受眾優化溝通清晰度，落實包容性設計解決方案。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025/08 - Current</div>
+                <div class="timeline-content">
+                    <h3 class="job-title">Research Assistant</h3>
+                    <span class="company">UT Austin HRI Team | Austin, USA</span>
+                    <ul class="job-desc">
+                        <li>協助人機互動 (Human-Robot Interaction) 研究，負責實驗設計、執行與參與者招募。</li>
+                        <li>協調團隊進行互動設計開發與學術研究數據收集。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="timeline-item">
+                <div class="timeline-date">Exp. May 2027</div>
+                <div class="timeline-content">
+                    <h3 class="job-title">Master of Science in Information Studies</h3>
+                    <span class="company">The University of Texas at Austin | UX & Project Strategy Track</span>
+                    <ul class="job-desc">
+                        <li>專攻 UX 研究與資訊架構。</li>
+                        <li>擔任 UT Marketplace 學生志願團隊的 UX Design Lead。</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                <h3>Chia-Chi Lin (Linda)</h3>
+                <p style="font-size: 0.9rem; opacity: 0.7;">Based in Austin, TX • Open for Internship Opportunities</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://linda-in-design.framer.website/">Portfolio</a>
+                <a href="https://www.linkedin.com/in/linda-lin-design/">LinkedIn</a>
+                <a href="mailto:cl54428@eid.utexas.edu">Email</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
