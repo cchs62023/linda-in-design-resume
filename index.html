@@ -9,7 +9,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,42 +17,60 @@
     <style>
         /* --- CSS Variables --- */
         :root {
-            --md-sys-color-primary: #004FA1;
-            --md-sys-color-on-primary: #FFFFFF;
-            --md-sys-color-secondary: #526070;
+            /* Dark Mode (Default) */
+            --bg-main: #000000;
             
-            --md-sys-color-background: #FDFBFF;
-            --md-sys-color-surface: #FFFFFF;
-            --md-sys-color-surface-container: #F0F4F9;
+            /* Text Colors */
+            --text-primary: #ffffff; 
+            --text-secondary: #e4e4e7;
+            --text-tertiary: #a1a1aa;
             
-            --md-sys-color-on-surface: #1A1C1E;
-            --md-sys-color-on-surface-variant: #43474E;
+            /* Accents */
+            --c-accent: #2997ff;
+            --c-gradient-1: #2997ff;
+            --c-gradient-2: #bf5af2;
+            --c-gradient-3: #30cfd0;
             
-            --md-sys-color-outline: #73777F;
-            --md-sys-color-outline-variant: #C3C7CF;
-            --md-sys-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-            --md-sys-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            /* Glassmorphism */
+            --glass-panel: rgba(30, 30, 30, 0.70);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            --glass-blur: 50px;
             
-            --icon-bg-light: rgba(0, 79, 161, 0.08);
-            --nav-height: 64px;
-            --border-radius-card: 24px;
-            --border-radius-pill: 100px;
+            /* UI Elements */
+            --nav-bg: rgba(18, 18, 18, 0.85);
+            --card-radius: 24px;
+            --pill-radius: 999px;
+            --focus-ring: #2997ff;
             
-            --motion-easing-emphasized: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+            /* --- SPACING CONFIGURATION --- */
+            /* 1. Section Top Spacing: 120px */
+            --section-padding-top: 120px; 
+            
+            /* 2. Title Bottom Spacing: 24px */
+            --title-margin-bottom: 24px;  
+            
+            /* Aurora Blobs */
+            --blob-1: rgba(41, 151, 255, 0.45);
+            --blob-2: rgba(94, 92, 230, 0.45);
+            --blob-3: rgba(48, 207, 208, 0.25);
         }
 
-        [data-theme="dark"] {
-            --md-sys-color-primary: #A8C7FA;
-            --md-sys-color-on-primary: #00315F;
-            --md-sys-color-background: #111318;
-            --md-sys-color-surface: #1E2126;
-            --md-sys-color-surface-container: #2B2F35;
-            --md-sys-color-on-surface: #E2E2E6;
-            --md-sys-color-on-surface-variant: #C4C6D0;
-            --md-sys-color-outline: #8D9199;
-            --md-sys-color-outline-variant: #444746;
-            --icon-bg-light: rgba(168, 199, 250, 0.15);
-            --md-sys-elevation-1: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
+        /* Light Mode Overrides */
+        [data-theme="light"] {
+            --bg-main: #f5f5f7;
+            --text-primary: #1d1d1f; 
+            --text-secondary: #3f3f46;
+            --text-tertiary: #71717a;
+            
+            --glass-panel: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --glass-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            
+            --blob-1: rgba(168, 215, 255, 0.7);
+            --blob-2: rgba(216, 180, 254, 0.6);
+            --blob-3: rgba(180, 245, 245, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,466 +78,536 @@
         html { scroll-behavior: smooth; }
         
         body {
-            font-family: 'Roboto', 'Noto Sans TC', sans-serif;
-            background-color: var(--md-sys-color-background);
-            color: var(--md-sys-color-on-surface);
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            padding-top: var(--nav-height);
+            padding-top: 80px;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
             -webkit-font-smoothing: antialiased;
         }
 
         *:focus-visible {
-            outline: 3px solid var(--md-sys-color-primary);
+            outline: 3px solid var(--focus-ring);
             outline-offset: 4px;
             border-radius: 4px;
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
+        /* --- Background Motion --- */
+        .aurora-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .aurora-blob {
+            position: absolute;
+            filter: blur(90px);
+            border-radius: 50%;
+            opacity: 1;
+            transition: background 0.5s ease;
+            animation: aurora-move 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blob-1 { width: 60vw; height: 60vw; background: radial-gradient(circle, var(--blob-1), transparent 65%); top: -15%; right: -15%; }
+        .blob-2 { width: 70vw; height: 70vw; background: radial-gradient(circle, var(--blob-2), transparent 65%); bottom: -25%; left: -15%; animation-duration: 35s; animation-direction: alternate-reverse; }
+        .blob-3 { width: 50vw; height: 50vw; background: radial-gradient(circle, var(--blob-3), transparent 65%); top: 30%; left: 30%; animation-duration: 20s; opacity: 0.6; }
+
+        @keyframes aurora-move {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(8%, 5%) scale(1.05); }
         }
 
-        /* --- Language Switching --- */
-        .lang-zh { display: none; }
-        body[data-lang="en"] .lang-zh { display: none !important; }
-        body[data-lang="en"] .lang-en { display: inline-block; }
-        body[data-lang="en"] .lang-en { display: block; } 
-        body[data-lang="zh"] .lang-en { display: none !important; }
-        body[data-lang="zh"] .lang-zh { display: inline-block; }
-        body[data-lang="zh"] .lang-zh { display: block; }
-
-        /* --- Layout --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Strict Spacing Rules */
-        #skills, #experience, #education, #projects {
-            padding-top: 160px !important; 
-            padding-bottom: 60px;
-        }
-
-        #skills h2, #experience h2, #education h2, #projects h2 {
-            margin-top: 0;
-            margin-bottom: 48px !important;
-        }
-
-        /* Typography */
+        /* --- Typography --- */
         h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 400;
-            line-height: 1.12;
-            letter-spacing: -0.25px;
-            margin-bottom: 24px;
-            color: var(--md-sys-color-on-surface);
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        h1 span {
+            background: linear-gradient(135deg, var(--c-gradient-3) 10%, var(--c-gradient-1) 50%, var(--c-gradient-2) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
+        /* --- H2 Styling --- */
         h2 {
-            font-size: 2rem;
-            font-weight: 400;
-            line-height: 1.25;
-            letter-spacing: 0px;
-            color: var(--md-sys-color-on-surface);
+            font-size: 2rem; 
+            letter-spacing: 0.08em; 
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: left;
+            line-height: 1.3;
+            margin-top: 0;
+            margin-bottom: 24px !important; 
         }
 
         h3 {
-            font-size: 1.375rem;
-            font-weight: 500;
-            line-height: 1.27;
-            letter-spacing: 0px;
-            color: var(--md-sys-color-on-surface);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+            margin-top: 0; 
+            line-height: 1.2; 
         }
 
         p {
-            font-size: 1rem;
-            line-height: 1.5;
-            letter-spacing: 0.5px;
-            color: var(--md-sys-color-on-surface-variant);
-            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            font-weight: 400;
+            line-height: 1.7;
         }
 
-        .btn, .date-badge, .md-chip {
-            font-size: 0.9rem;
-            letter-spacing: 0.1px;
-            font-weight: 500;
+        /* --- Layout & Sections --- */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* --- Nav --- */
+        /* --- SPACING OVERRIDE --- */
+        #skills, 
+        #experience, 
+        #education, 
+        #projects {
+            padding-top: 120px !important; 
+            padding-bottom: 40px;
+            scroll-margin-top: 100px;
+        }
+
+        /* --- Navigation --- */
         .top-nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: var(--nav-height);
-            background-color: color-mix(in srgb, var(--md-sys-color-surface), transparent 5%);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
+            top: 24px; left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            min-width: 340px;
+            height: 60px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--pill-radius);
             z-index: 1000;
+            display: flex; align-items: center;
+            padding: 0 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            transition: background 0.3s ease, border 0.3s ease;
         }
 
         .nav-container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px;
+            gap: 32px;
         }
 
         .nav-logo {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--md-sys-color-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-primary);
             text-decoration: none;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
         }
 
-        .nav-actions { display: flex; gap: 12px; }
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
 
         .icon-btn {
             background: transparent;
-            border: 1px solid var(--md-sys-color-outline-variant);
-            color: var(--md-sys-color-on-surface-variant);
-            width: 40px;
-            height: 40px;
+            border: none;
+            color: var(--text-secondary);
+            width: 40px; height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
             transition: all 0.2s;
         }
         .icon-btn:hover {
-            background-color: var(--md-sys-color-surface-container);
-            color: var(--md-sys-color-primary);
-            border-color: var(--md-sys-color-primary);
+            color: var(--text-primary);
+            background: rgba(125,125,125,0.15);
         }
 
-        /* --- Components --- */
-        .btn-group { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
-
-        .btn {
-            display: inline-flex;
+        /* --- Hero Section --- */
+        header {
+            min-height: 85vh;
+            display: flex; 
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 48px;
-            padding: 0 24px;
-            border-radius: var(--border-radius-pill);
-            text-decoration: none;
-            gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            position: relative;
+            padding-top: 80px;
+            z-index: 10;
         }
 
-        .btn-filled {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            border: none;
-            box-shadow: var(--md-sys-elevation-1);
-        }
-        .btn-filled:hover {
-            box-shadow: var(--md-sys-elevation-2);
-            transform: translateY(-1px);
-        }
-
-        .btn-outlined {
-            background-color: transparent;
-            border: 1px solid var(--md-sys-color-outline);
-            color: var(--md-sys-color-primary);
-        }
-        .btn-outlined:hover {
-            background-color: var(--icon-bg-light);
-            border-color: var(--md-sys-color-primary);
+        .hero-content {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 20;
         }
 
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(41, 151, 255, 0.12);
+            color: var(--c-accent);
+            padding: 10px 20px;
+            border-radius: var(--pill-radius);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+            border: 1px solid rgba(41, 151, 255, 0.25);
+        }
+
+        .hero-desc {
+            max-width: 700px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 40px;
+            text-align: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Cards --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            gap: 32px;
         }
 
-        .md-card {
-            background-color: var(--md-sys-color-surface);
-            border: 1px solid var(--md-sys-color-outline-variant);
-            border-radius: var(--border-radius-card);
-            padding: 32px;
+        .md-card, .list-card {
+            background: var(--glass-panel);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            padding: 40px;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            transition: transform 0.3s var(--motion-easing-emphasized), box-shadow 0.3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: var(--glass-shadow);
         }
-        .md-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--md-sys-elevation-2);
-            border-color: var(--md-sys-color-primary);
+
+        .md-card:hover, .list-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(41, 151, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
         }
 
         .card-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            background-color: var(--icon-bg-light);
-            color: var(--md-sys-color-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
+            width: 64px; height: 64px;
+            border-radius: 18px;
+            background: rgba(41, 151, 255, 0.1);
+            color: var(--c-accent);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.75rem;
             margin-bottom: 24px;
         }
 
-        .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 16px; }
+        .chips-wrap { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 24px; }
         .md-chip {
-            background-color: var(--md-sys-color-surface-container);
+            background: rgba(125,125,125,0.15);
+            color: var(--text-secondary);
+            padding: 6px 14px;
             border-radius: 8px;
-            padding: 6px 12px;
-            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .list-card {
-            background-color: var(--md-sys-color-surface);
-            border: 1px solid var(--md-sys-color-outline-variant);
-            border-radius: var(--border-radius-card);
-            padding: 40px;
+        /* --- Buttons (Super Z-Index) --- */
+        .btn-group { 
+            display: flex; justify-content: center; gap: 16px; margin-top: 0; flex-wrap: wrap; 
+            position: relative; z-index: 100; pointer-events: auto;
         }
 
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            height: 56px; padding: 0 36px;
+            border-radius: var(--pill-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 1.05rem;
+            cursor: pointer;
+            position: relative;
+            z-index: 101;
+        }
+
+        .btn-filled {
+            background: var(--text-primary);
+            color: var(--bg-main); 
+            border: none;
+        }
+        .btn-filled:hover { opacity: 0.9; transform: scale(1.02); }
+
+        .btn-outlined {
+            background: rgba(125, 125, 125, 0.1);
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+        }
+        .btn-outlined:hover {
+            background: rgba(125, 125, 125, 0.25);
+            border-color: var(--text-primary);
+        }
+
+        /* --- List Items --- */
         .list-item {
-            display: flex;
-            gap: 40px;
-            padding-bottom: 40px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            display: flex; 
+            gap: 48px; 
+            padding-bottom: 48px; margin-bottom: 48px;
+            border-bottom: 1px solid var(--glass-border);
+            align-items: flex-start; 
         }
-        .list-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+        .list-item:last-child { border: none; padding-bottom: 0; margin-bottom: 0; }
 
-        .item-meta { min-width: 180px; flex-shrink: 0; }
+        .item-meta { 
+            min-width: 180px; 
+            flex-shrink: 0;
+            padding-top: 3px; 
+        }
+        
         .date-badge {
-            color: var(--md-sys-color-primary);
+            color: var(--c-accent);
+            font-weight: 600;
             margin-bottom: 8px;
             display: block;
-        }
-        .location { 
-            font-size: 0.875rem; 
-            color: var(--md-sys-color-on-surface-variant); 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            letter-spacing: 0.25px; 
-        }
-
-        .item-content { flex-grow: 1; }
-        .org-name { 
-            font-weight: 500; 
-            color: var(--md-sys-color-secondary); 
-            margin-bottom: 16px; 
-            display: block; 
-            letter-spacing: 0.15px; 
-        }
-
-        ul.bullets {
-            list-style-type: disc;
-            padding-left: 20px;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-        ul.bullets li { 
             font-size: 1rem;
-            line-height: 1.6;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px; 
+            line-height: 1.3;
+            margin-top: 0;
+        }
+        .location { font-size: 0.95rem; color: var(--text-tertiary); display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+
+        .org-name {
+            display: block;
+            font-size: 1.2rem; 
+            color: var(--text-primary); 
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        ul.bullets { list-style: none; padding: 0; }
+        ul.bullets li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+        ul.bullets li::before {
+            content: '';
+            position: absolute; left: 8px; top: 11px;
+            width: 5px; height: 5px; border-radius: 50%;
+            background: var(--text-secondary);
         }
 
         .project-link {
             text-decoration: none;
-            color: var(--md-sys-color-primary);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
+            color: var(--c-accent);
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: inline-flex; align-items: center; gap: 10px;
             transition: opacity 0.2s;
-            letter-spacing: 0.1px;
         }
-        .project-link:hover { text-decoration: underline; opacity: 0.8; }
+        .project-link:hover { opacity: 0.8; text-decoration: underline; }
 
-        /* --- Footer Layout Fix (Stacked Right) --- */
+        /* --- Footer --- */
         footer {
-            background-color: var(--md-sys-color-surface-container);
-            border-top: 1px solid var(--md-sys-color-outline-variant);
+            margin-top: 120px;
             padding: 80px 0;
-            margin-top: 60px;
+            border-top: 1px solid var(--glass-border);
+            background: var(--glass-panel);
         }
         
         .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end; /* Bottom Alignment */
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .footer-links-group {
-            display: flex;
-            flex-direction: column; /* Vertical Stack */
-            align-items: flex-end; /* Align Right */
-            gap: 12px;
-        }
-
+        
         .footer-link {
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--text-secondary);
             text-decoration: none;
-            letter-spacing: 0.1px;
-            font-weight: 500;
-            position: relative;
+            margin-left: 32px;
             transition: color 0.2s;
+            font-weight: 500;
         }
-        .footer-link:hover { color: var(--md-sys-color-primary); }
+        .footer-link:hover { color: var(--c-accent); }
 
-        /* Animation */
+        /* --- Language Logic --- */
+        .lang-zh { display: none; }
+        body[data-lang="en"] .lang-zh { display: none !important; }
+        body[data-lang="zh"] .lang-en { display: none !important; }
+        body[data-lang="zh"] .lang-zh { display: block; }
+        body[data-lang="zh"] span.lang-zh { display: inline; }
+        body[data-lang="zh"] .date-badge.lang-zh { display: block; }
+        body[data-lang="zh"] .location.lang-zh { display: flex; }
+
+        /* --- Animations --- */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s var(--motion-easing-emphasized), transform 0.6s var(--motion-easing-emphasized);
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .hero-anim {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.8s var(--motion-easing-emphasized) forwards;
+        .hero-anim { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            animation: fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            position: relative; 
+            z-index: 50;
         }
         .d-1 { animation-delay: 0.1s; }
-        .d-2 { animation-delay: 0.2s; }
-        .d-3 { animation-delay: 0.4s; }
+        .d-2 { animation-delay: 0.3s; }
+        .d-3 { animation-delay: 0.5s; }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
         /* RWD */
         @media (max-width: 768px) {
-            .container { padding: 0 20px; }
-            
             #skills, #experience, #education, #projects { 
-                padding-top: 80px !important; 
-                padding-bottom: 40px; 
+                padding-top: 100px !important; 
             }
             
-            .list-card { padding: 24px; }
-            .list-item { flex-direction: column; gap: 12px; }
-            .item-meta { min-width: auto; margin-bottom: 8px; }
-            .btn { width: 100%; }
-            h1 { font-size: 2.5rem; }
-            .nav-container { justify-content: space-between; }
+            header { padding-top: 100px; }
+            h1 { font-size: 2.75rem; }
             
-            /* Footer Mobile: Stack vertical left */
-            .footer-container { flex-direction: column; align-items: flex-start; gap: 32px; }
-            .footer-links-group { align-items: flex-start; }
+            .top-nav { width: 90%; top: 16px; min-width: auto; }
+            .nav-container { padding: 0 16px; gap: 16px; }
+            
+            .list-item { flex-direction: column; gap: 16px; }
+            .item-meta { margin-bottom: 0; }
+            
+            .footer-container { flex-direction: column; gap: 32px; align-items: center; text-align: center; }
+            .footer-link { margin: 0 12px; }
         }
     </style>
 </head>
-<body data-lang="en">
+<body data-lang="en" data-theme="dark">
     
-    <a href="#main-content" class="skip-link" style="position:absolute; top:-100px; left:0; background:var(--md-sys-color-primary); color:white; padding:10px; z-index:9999;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to content</a>
+    <!-- Background -->
+    <div class="aurora-bg">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+    </div>
+
+    <a href="#main-content" class="skip-link" style="position:absolute; top:-100px; left:0; background:var(--c-accent); color:white; padding:10px; z-index:9999; font-weight:bold;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to content</a>
 
     <nav class="top-nav" aria-label="Main Navigation">
         <div class="nav-container">
             <a href="#" class="nav-logo">Linda.Design</a>
             <div class="nav-actions">
                 <button id="lang-toggle" class="icon-btn" aria-label="Switch Language">
-                    <span class="lang-en" style="font-size: 0.9rem; font-weight:bold;">EN</span>
-                    <span class="lang-zh" style="font-size: 0.9rem; font-weight:bold;">文</span>
+                    <span class="lang-en" style="font-weight:700; font-size:0.85rem;">EN</span>
+                    <span class="lang-zh" style="font-weight:700; font-size:0.85rem;">文</span>
                 </button>
-                <button id="theme-toggle" class="icon-btn" aria-label="Switch to Dark Mode">
-                    <i class="fas fa-moon" aria-hidden="true"></i>
+                <button id="theme-toggle" class="icon-btn" aria-label="Switch to Light Mode">
+                    <i class="fas fa-sun" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
     </nav>
 
     <main id="main-content">
-        <!-- Hero -->
-        <header class="container" style="min-height: 85vh; display: flex; align-items: center;">
-            <div style="max-width: 800px;">
+        <!-- Hero Section -->
+        <header class="container">
+            <div class="hero-content">
                 <div class="hero-anim">
-                    <span class="lang-en" style="display: inline-block; background: var(--icon-bg-light); color: var(--md-sys-color-primary); padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; margin-bottom: 24px;">MSIS Candidate at UT Austin</span>
-                    <span class="lang-zh" style="display: none; background: var(--icon-bg-light); color: var(--md-sys-color-primary); padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; margin-bottom: 24px;">UT Austin 資訊研究碩士生</span>
+                    <div class="badge">
+                        <i class="fas fa-graduation-cap"></i> 
+                        <span class="lang-en">MSIS Candidate at UT Austin</span>
+                        <span class="lang-zh">UT Austin 資訊研究碩士生</span>
+                    </div>
                 </div>
                 
-                <h1 class="hero-anim d-1 lang-en">Hi, I'm <span style="color: var(--md-sys-color-primary);">Linda Lin</span>.<br>Designing Data-Driven Experiences.</h1>
-                <h1 class="hero-anim d-1 lang-zh">嗨，我是 <span style="color: var(--md-sys-color-primary);">Linda Lin</span>。<br>打造數據驅動的使用者體驗。</h1>
+                <h1 class="hero-anim d-1 lang-en">Hi, I'm Linda Lin.<br>Designing <span>Data-Driven</span> Experiences.</h1>
+                <h1 class="hero-anim d-1 lang-zh">嗨，我是 Linda Lin。<br>打造<span>數據驅動</span>的使用者體驗。</h1>
                 
-                <p class="hero-anim d-2 lang-en" style="font-size: 1.125rem; max-width: 700px;">
+                <p class="hero-anim d-2 hero-desc lang-en">
                     Graduate student at UT Austin with 7 years of UX experience. <br>
-                    Specialized in <b>data-driven UX</b>, <b>digital accessibility</b>, <b>inclusive design</b>, and <b>Agile methodologies</b>.
+                    Specialized in <b>digital accessibility</b>, <b>inclusive design</b>, and <b>Agile methodologies</b>.
                 </p>
-                <p class="hero-anim d-2 lang-zh" style="font-size: 1.125rem; max-width: 700px;">
+                <p class="hero-anim d-2 hero-desc lang-zh">
                     目前就讀於 UT Austin，擁有 7 年 UX 設計經驗。<br>
-                    專注於 <b>數據驅動設計</b>、<b>數位無障礙 (Accessibility)</b>、<b>包容性設計</b> 以及 <b>敏捷開發 (Agile)</b> 流程。
+                    專注於 <b>數位無障礙 (Accessibility)</b>、<b>包容性設計</b> 以及 <b>敏捷開發</b>。
                 </p>
                 
+                <!-- JAVASCRIPT ENHANCED CONTACT BUTTON -->
                 <div class="btn-group hero-anim d-3">
-                    <a href="mailto:cl54428@eid.utexas.edu" class="btn btn-filled">
-                        <i class="fas fa-envelope" aria-hidden="true"></i> 
+                    <!-- Added 'onclick' for JS fallback and clipboard functionality -->
+                    <a href="mailto:cl54428@eid.utexas.edu?subject=Portfolio%20Inquiry" 
+                       class="btn btn-filled"
+                       onclick="handleContact(event)">
                         <span class="lang-en">Contact Me</span>
                         <span class="lang-zh">聯絡我</span>
                     </a>
                     <a href="https://linda-in-design.framer.website/" target="_blank" class="btn btn-outlined">
                         <span class="lang-en">Portfolio</span>
                         <span class="lang-zh">作品集</span>
-                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        <i class="fas fa-arrow-right" style="margin-left: 8px; font-size: 0.8rem;"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="btn btn-outlined" style="width: 48px; padding: 0;">
+                    <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="btn btn-outlined" style="width: 56px; padding: 0;" aria-label="LinkedIn Profile">
                         <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
         </header>
 
-        <!-- Skills -->
+        <!-- Skills (Bento Grid) -->
         <section class="container" id="skills">
             <h2 class="reveal lang-en">Core Competencies</h2>
             <h2 class="reveal lang-zh">核心能力</h2>
             
             <div class="grid-container reveal">
-                <!-- Card 1 -->
                 <div class="md-card">
                     <div class="card-icon"><i class="fas fa-pen-nib" aria-hidden="true"></i></div>
                     <h3 class="lang-en">UI/UX Design</h3>
                     <h3 class="lang-zh">UI/UX 設計</h3>
                     <p class="lang-en">Creating inclusive prototypes and design systems with a focus on WCAG usability standards.</p>
                     <p class="lang-zh">打造符合 WCAG 易用性標準的包容性原型與設計系統，注重視覺美感與操作直覺。</p>
-                    <div class="chips-wrap"><span class="md-chip">Figma</span><span class="md-chip">Adobe Suite</span><span class="md-chip">Miro</span></div>
+                    <div class="chips-wrap"><span class="md-chip">Figma</span><span class="md-chip">Adobe Suite</span></div>
                 </div>
-                <!-- Card 2 -->
                 <div class="md-card">
                     <div class="card-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
                     <h3 class="lang-en">Data Analytics</h3>
                     <h3 class="lang-zh">數據分析</h3>
                     <p class="lang-en">Producing data-driven reports to identify accessibility barriers and optimize platform engagement.</p>
                     <p class="lang-zh">透過數據分析產出報告，識別無障礙障礙點並優化平台參與度與 SEO 排名。</p>
-                    <div class="chips-wrap"><span class="md-chip">GA4</span><span class="md-chip">MS Clarity</span><span class="md-chip">Hotjar</span></div>
+                    <div class="chips-wrap"><span class="md-chip">GA4</span><span class="md-chip">Hotjar</span></div>
                 </div>
-                <!-- Card 3 -->
                 <div class="md-card">
                     <div class="card-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
                     <h3 class="lang-en">UX Research</h3>
                     <h3 class="lang-zh">使用者研究</h3>
                     <p class="lang-en">Conducting accessibility-focused research, usability testing, and Biometric UX (eye tracking).</p>
                     <p class="lang-zh">執行專注於無障礙設計的研究、易用性測試以及生物識別 UX（眼動追蹤）。</p>
-                    <div class="chips-wrap"><span class="md-chip">Usability Testing</span><span class="md-chip">Eye Tracking</span><span class="md-chip">Audits</span></div>
+                    <div class="chips-wrap"><span class="md-chip">Eye Tracking</span><span class="md-chip">Testing</span></div>
                 </div>
-                <!-- Card 4 -->
                 <div class="md-card">
                     <div class="card-icon"><i class="fas fa-sync-alt" aria-hidden="true"></i></div>
                     <h3 class="lang-en">Agile Strategy</h3>
                     <h3 class="lang-zh">敏捷策略</h3>
                     <p class="lang-en">Collaborating with cross-functional global teams to design scalable, user-centered solutions.</p>
                     <p class="lang-zh">與跨職能全球團隊協作，設計可擴展且以使用者為中心的解決方案。</p>
-                    <div class="chips-wrap"><span class="md-chip">Agile</span><span class="md-chip">Project Mgmt</span><span class="md-chip">Cross-functional</span></div>
+                    <div class="chips-wrap"><span class="md-chip">Scrum</span><span class="md-chip">Jira</span></div>
                 </div>
             </div>
         </section>
@@ -530,7 +618,6 @@
             <h2 class="reveal lang-zh">工作經歷</h2>
 
             <div class="list-card reveal">
-                <!-- Job 1 -->
                 <div class="list-item">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Apr 2021 - Jul 2025</span>
@@ -555,13 +642,12 @@
                         </ul>
                     </div>
                 </div>
-                <!-- Job 2 -->
                 <div class="list-item">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Apr 2023 - Oct 2023</span>
                         <span class="date-badge lang-zh">2023年4月 - 2023年10月</span>
                         <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Taipei, Taiwan</span>
-                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，台北</span>
+                        <span class="location lang-zh"><i class=\"fas fa-map-marker-alt\"></i> 台灣，台北</span>
                     </div>
                     <div class="item-content">
                         <h3 class="lang-en">UX Designer (Contractor)</h3>
@@ -578,7 +664,6 @@
                         </ul>
                     </div>
                 </div>
-                <!-- Job 3 -->
                 <div class="list-item">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Feb 2020 - Mar 2021</span>
@@ -596,27 +681,6 @@
                         </ul>
                         <ul class="bullets lang-zh">
                             <li>跨部門合作開發色彩系統，提升硬體介面的視覺辨識度與人體工學舒適度。</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Job 4 -->
-                <div class="list-item">
-                    <div class="item-meta">
-                        <span class="date-badge lang-en">Mar 2019 - Jun 2019</span>
-                        <span class="date-badge lang-zh">2019年3月 - 2019年6月</span>
-                        <span class="location lang-en"><i class="fas fa-map-marker-alt"></i> Taipei, Taiwan</span>
-                        <span class="location lang-zh"><i class="fas fa-map-marker-alt"></i> 台灣，台北</span>
-                    </div>
-                    <div class="item-content">
-                        <h3 class="lang-en">UI/UX Design Intern</h3>
-                        <h3 class="lang-zh">UI/UX 設計實習生</h3>
-                        <span class="org-name lang-en">Fubon Financial</span>
-                        <span class="org-name lang-zh">富邦金控</span>
-                        <ul class="bullets lang-en">
-                            <li>Assisted in responsive wireframe design and RWD accessibility testing for Fubon Bank’s mobile app.</li>
-                        </ul>
-                        <ul class="bullets lang-zh">
-                            <li>協助富邦銀行行動 App 的響應式 Wireframe 設計與 RWD 無障礙測試。</li>
                         </ul>
                     </div>
                 </div>
@@ -641,20 +705,14 @@
                         <h3 class="lang-zh">資訊研究理學碩士 (UX 組)</h3>
                         <span class="org-name lang-en">The University of Texas at Austin</span>
                         <span class="org-name lang-zh">德州大學奧斯汀分校 (UT Austin)</span>
-                        <p class="lang-en" style="font-size: 0.9rem; margin-bottom: 8px;">
-                            <i class="fas fa-book-open" style="margin-right: 8px; color: var(--md-sys-color-primary);"></i>
+                        <p class="lang-en" style="font-size: 1rem; margin-bottom: 12px; color: var(--text-secondary);">
+                            <i class="fas fa-book-open" style="margin-right: 8px; color: var(--c-accent);"></i>
                             Coursework: Biometric UX, Info Architecture, Accessibility Design.
                         </p>
-                        <p class="lang-zh" style="font-size: 0.9rem; margin-bottom: 8px;">
-                            <i class="fas fa-book-open" style="margin-right: 8px; color: var(--md-sys-color-primary);"></i>
+                        <p class="lang-zh" style="font-size: 1rem; margin-bottom: 12px; color: var(--text-secondary);">
+                            <i class="fas fa-book-open" style="margin-right: 8px; color: var(--c-accent);"></i>
                             修課內容：生物識別 UX、資訊架構、無障礙設計。
                         </p>
-                        <ul class="bullets lang-en">
-                            <li>Served as UX Design Lead for UT student volunteer group creating public services.</li>
-                        </ul>
-                        <ul class="bullets lang-zh">
-                            <li>擔任 UT 學生志願團隊的 UX 設計負責人，開發公共服務專案。</li>
-                        </ul>
                     </div>
                 </div>
                 <div class="list-item">
@@ -669,8 +727,8 @@
                         <h3 class="lang-zh">工業設計學士</h3>
                         <span class="org-name lang-en">National Kaohsiung Normal University</span>
                         <span class="org-name lang-zh">國立高雄師範大學</span>
-                        <p class="lang-en" style="font-size: 0.9rem; opacity: 0.8;">Awarded $50,000 USD scholarship for advanced study in Design.</p>
-                        <p class="lang-zh" style="font-size: 0.9rem; opacity: 0.8;">獲得 50,000 美元獎學金前往美國 College for Creative Studies 進修設計。</p>
+                        <p class="lang-en" style="font-size: 0.95rem; opacity: 0.8;">Awarded $50,000 USD scholarship for advanced study in Design.</p>
+                        <p class="lang-zh" style="font-size: 0.95rem; opacity: 0.8;">獲得 50,000 美元獎學金前往美國 College for Creative Studies 進修設計。</p>
                     </div>
                 </div>
             </div>
@@ -692,7 +750,7 @@
                             <a href="https://linda-in-design.framer.website/projects/004-web" target="_blank" class="project-link">
                                 <span class="lang-en">Synology Design Site</span>
                                 <span class="lang-zh">Synology Design Site</span>
-                                <i class="fas fa-external-link-alt"></i>
+                                <i class="fas fa-external-link-alt" style="font-size: 1rem;"></i>
                             </a>
                         </h3>
                         <ul class="bullets lang-en">
@@ -713,7 +771,7 @@
                             <a href="https://linda-in-design.framer.website/projects/003-web" target="_blank" class="project-link">
                                 <span class="lang-en">Synology Video Tutorial Site</span>
                                 <span class="lang-zh">Synology Video Tutorial Site</span>
-                                <i class="fas fa-external-link-alt"></i>
+                                <i class="fas fa-external-link-alt" style="font-size: 1rem;"></i>
                             </a>
                         </h3>
                         <ul class="bullets lang-en">
@@ -734,7 +792,7 @@
                             <a href="https://linda-in-design.framer.website/projects/001-app" target="_blank" class="project-link">
                                 <span class="lang-en">Taipei Metro App Redesign</span>
                                 <span class="lang-zh">台北捷運 App 改版</span>
-                                <i class="fas fa-external-link-alt"></i>
+                                <i class="fas fa-external-link-alt" style="font-size: 1rem;"></i>
                             </a>
                         </h3>
                         <ul class="bullets lang-en">
@@ -753,82 +811,21 @@
     <footer>
         <div class="container footer-container">
             <div>
-                <h3 style="margin-bottom: 8px; font-size: 1.2rem;">Chia-Chi Lin (Linda)</h3>
-                <p class="lang-en" style="font-size: 0.9rem; color: var(--md-sys-color-outline);">Based in Austin, TX • Open for Internship Opportunities</p>
-                <p class="lang-zh" style="font-size: 0.9rem; color: var(--md-sys-color-outline);">居住於美國奧斯汀 • 開放實習機會</p>
+                <h3 style="margin-bottom: 8px; font-size: 1.2rem; color: var(--text-primary);">Chia-Chi Lin (Linda)</h3>
+                <p class="lang-en" style="font-size: 0.95rem; color: var(--text-secondary);">Based in Austin, TX • Open for Internship Opportunities</p>
+                <p class="lang-zh" style="font-size: 0.95rem; color: var(--text-secondary);">居住於美國奧斯汀 • 開放實習機會</p>
             </div>
             
-            <!-- Vertical Stack Alignment (Right Side) -->
-            <div class="footer-links-group">
+            <div>
                 <a href="https://linda-in-design.framer.website/" target="_blank" class="footer-link">
                     <span class="lang-en">Portfolio</span>
                     <span class="lang-zh">作品集</span>
                 </a>
                 <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="footer-link">LinkedIn</a>
-                <!-- Fixed Email Link -->
-                <a href="mailto:cl54428@eid.utexas.edu" class="footer-link">Email</a>
+                <a href="mailto:cl54428@eid.utexas.edu?subject=Portfolio%20Inquiry" class="footer-link">Email</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // --- Theme Management ---
-        const themeBtn = document.getElementById('theme-toggle');
-        const themeIcon = themeBtn.querySelector('i');
-        const html = document.documentElement;
-
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            if (theme === 'dark') {
-                themeIcon.classList.replace('fa-moon', 'fa-sun');
-                themeBtn.setAttribute('aria-label', 'Switch to Light Mode');
-            } else {
-                themeIcon.classList.replace('fa-sun', 'fa-moon');
-                themeBtn.setAttribute('aria-label', 'Switch to Dark Mode');
-            }
-        }
-
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) { setTheme('dark'); }
-
-        themeBtn.addEventListener('click', () => {
-            const current = html.getAttribute('data-theme');
-            setTheme(current === 'dark' ? 'light' : 'dark');
-        });
-
-        // --- Language Toggle Management ---
-        const langBtn = document.getElementById('lang-toggle');
-        const body = document.body;
-        const savedLang = localStorage.getItem('lang') || 'en';
-        body.setAttribute('data-lang', savedLang);
-
-        langBtn.addEventListener('click', () => {
-            const currentLang = body.getAttribute('data-lang');
-            const newLang = currentLang === 'en' ? 'zh' : 'en';
-            body.setAttribute('data-lang', newLang);
-            localStorage.setItem('lang', newLang);
-        });
-
-        // --- Scroll Reveal Observer ---
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if (!prefersReducedMotion) {
-            const revealElements = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-            revealElements.forEach(el => observer.observe(el));
-        } else {
-            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-        }
-    </script>
-</body>
-</html>
+        // --- SMART CONTACT HANDLER (The Magic Part
