@@ -44,10 +44,7 @@
             --focus-ring: #2997ff;
             
             /* --- SPACING CONFIGURATION --- */
-            /* 1. Section Top Spacing: 120px */
             --section-padding-top: 120px; 
-            
-            /* 2. Title Bottom Spacing: 24px */
             --title-margin-bottom: 24px;  
             
             /* Aurora Blobs */
@@ -62,12 +59,10 @@
             --text-primary: #1d1d1f; 
             --text-secondary: #3f3f46;
             --text-tertiary: #71717a;
-            
             --glass-panel: rgba(255, 255, 255, 0.8);
             --glass-border: rgba(0, 0, 0, 0.08);
             --glass-shadow: 0 10px 30px rgba(0,0,0,0.05);
             --nav-bg: rgba(255, 255, 255, 0.85);
-            
             --blob-1: rgba(168, 215, 255, 0.7);
             --blob-2: rgba(216, 180, 254, 0.6);
             --blob-3: rgba(180, 245, 245, 0.6);
@@ -98,7 +93,8 @@
         .aurora-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
+            /* FIX: Reduced Z-Index to ensure it's behind everything */
+            z-index: -10; 
             overflow: hidden;
             pointer-events: none;
         }
@@ -241,7 +237,7 @@
             background: rgba(125,125,125,0.15);
         }
 
-        /* --- Hero Section --- */
+        /* --- Hero Section (Z-Index Fixes) --- */
         header {
             min-height: 85vh;
             display: flex; 
@@ -251,7 +247,8 @@
             text-align: center;
             position: relative;
             padding-top: 80px;
-            z-index: 10;
+            /* FIX: Ensure header is above background */
+            z-index: 10; 
         }
 
         .hero-content {
@@ -261,7 +258,8 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            z-index: 20;
+            /* FIX: Ensure content is above header base */
+            z-index: 20; 
         }
 
         .badge {
@@ -334,10 +332,18 @@
             font-weight: 500;
         }
 
-        /* --- Buttons (Super Z-Index) --- */
+        /* --- Buttons (CRITICAL FIX for Clickability) --- */
         .btn-group { 
-            display: flex; justify-content: center; gap: 16px; margin-top: 0; flex-wrap: wrap; 
-            position: relative; z-index: 100; pointer-events: auto;
+            display: flex; 
+            justify-content: center; 
+            gap: 16px; 
+            margin-top: 0; 
+            flex-wrap: wrap; 
+            position: relative;
+            /* FIX: Extremely high Z-index to float above everything */
+            z-index: 100; 
+            /* FIX: Force pointer events */
+            pointer-events: auto; 
         }
 
         .btn {
@@ -350,7 +356,8 @@
             font-size: 1.05rem;
             cursor: pointer;
             position: relative;
-            z-index: 101;
+            /* FIX: Ensure individual buttons are clickable */
+            z-index: 101; 
         }
 
         .btn-filled {
@@ -451,16 +458,17 @@
         }
         .footer-link:hover { color: var(--c-accent); }
 
-        /* --- Language Logic --- */
+        /* --- Language Logic Fixes --- */
         .lang-zh { display: none; }
         body[data-lang="en"] .lang-zh { display: none !important; }
         body[data-lang="zh"] .lang-en { display: none !important; }
+        
         body[data-lang="zh"] .lang-zh { display: block; }
         body[data-lang="zh"] span.lang-zh { display: inline; }
         body[data-lang="zh"] .date-badge.lang-zh { display: block; }
         body[data-lang="zh"] .location.lang-zh { display: flex; }
 
-        /* --- Animations --- */
+        /* --- Animations (With Z-Index Fix) --- */
         .reveal {
             opacity: 0;
             transform: translateY(50px);
@@ -472,8 +480,9 @@
             opacity: 0; 
             transform: translateY(30px); 
             animation: fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
-            position: relative; 
-            z-index: 50;
+            position: relative;
+            /* FIX: Ensure animation container sits above background */
+            z-index: 30; 
         }
         .d-1 { animation-delay: 0.1s; }
         .d-2 { animation-delay: 0.3s; }
@@ -550,12 +559,8 @@
                     專注於 <b>數位無障礙 (Accessibility)</b>、<b>包容性設計</b> 以及 <b>敏捷開發</b>。
                 </p>
                 
-                <!-- JAVASCRIPT ENHANCED CONTACT BUTTON -->
                 <div class="btn-group hero-anim d-3">
-                    <!-- Added 'onclick' for JS fallback and clipboard functionality -->
-                    <a href="mailto:cl54428@eid.utexas.edu?subject=Portfolio%20Inquiry" 
-                       class="btn btn-filled"
-                       onclick="handleContact(event)">
+                    <a href="mailto:cl54428@eid.utexas.edu?subject=Portfolio%20Inquiry" class="btn btn-filled">
                         <span class="lang-en">Contact Me</span>
                         <span class="lang-zh">聯絡我</span>
                     </a>
@@ -828,4 +833,69 @@
     </footer>
 
     <script>
-        // --- SMART CONTACT HANDLER (The Magic Part
+        // --- Theme Management (Light/Dark) ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeBtn.querySelector('i');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Initialize Theme
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            setTheme(systemPrefersDark ? 'dark' : 'light');
+        }
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            if (theme === 'dark') {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeBtn.setAttribute('aria-label', 'Switch to Light Mode');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeBtn.setAttribute('aria-label', 'Switch to Dark Mode');
+            }
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // --- Language Toggle ---
+        const langBtn = document.getElementById('lang-toggle');
+        const body = document.body;
+        const savedLang = localStorage.getItem('lang') || 'en';
+        body.setAttribute('data-lang', savedLang);
+
+        langBtn.addEventListener('click', () => {
+            const currentLang = body.getAttribute('data-lang');
+            const newLang = currentLang === 'en' ? 'zh' : 'en';
+            body.setAttribute('data-lang', newLang);
+            localStorage.setItem('lang', newLang);
+        });
+
+        // --- Scroll Reveal ---
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            revealElements.forEach(el => observer.observe(el));
+        } else {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+        }
+    </script>
+</body>
+</html>
