@@ -61,7 +61,6 @@
             --text-tertiary: #4b5563; /* Gray 600 */
             
             /* Accessible Accent for Text on Light BG */
-            /* Changed from bright yellow to Dark Amber/Gold for readability */
             --c-accent-text: #b45309; 
             
             --glass-panel: rgba(255, 255, 255, 0.85);
@@ -101,15 +100,23 @@
         @keyframes aurora-move { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(8%, 5%) scale(1.05); } }
 
         /* --- Typography --- */
-        h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 32px; color: var(--text-primary); text-align: left; }
+        h1 { 
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem); 
+            font-weight: 700; 
+            letter-spacing: -0.025em; 
+            line-height: 1.25; 
+            margin-bottom: 32px; 
+            color: var(--text-primary); 
+            text-align: left; 
+        }
         
-        /* Updated Gradient for Accessibility */
         h1 span { 
             background: linear-gradient(135deg, var(--c-accent-text) 0%, #ea580c 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             display: inline-block; 
-            /* Fallback for better contrast */
+            padding-bottom: 15px;
+            margin-bottom: -15px;
             text-shadow: 0 0 30px rgba(var(--c-accent), 0.2);
         }
         
@@ -150,8 +157,18 @@
         }
         .pokeball-3d::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: #fff; border: 6px solid #222; border-radius: 50%; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
         .pokeball-3d::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; background: #fff; border: 3px solid #222; border-radius: 50%; transition: background 0.3s; }
-        .hero-visual:hover .pokeball-3d { transform: scale(1.1) rotate(180deg); box-shadow: 0 0 50px var(--c-accent); }
-        .hero-visual:hover .pokeball-3d::after { background: #ff0000; box-shadow: 0 0 15px #ff0000; }
+        
+        .hero-visual:hover .pokeball-3d, 
+        .pokeball-3d.is-active { 
+            transform: scale(1.1) rotate(180deg); 
+            box-shadow: 0 0 50px var(--c-accent); 
+        }
+        .hero-visual:hover .pokeball-3d::after,
+        .pokeball-3d.is-active::after { 
+            background: #ff0000; 
+            box-shadow: 0 0 15px #ff0000; 
+        }
+        
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
         .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--badge-bg); color: var(--badge-text); padding: 8px 16px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 1px; border: 1px solid var(--badge-bg); margin-bottom: 24px; text-transform: uppercase; }
@@ -160,9 +177,17 @@
         .btn-group { display: flex; gap: 16px; margin-top: 0; flex-wrap: wrap; position: relative; z-index: 100; pointer-events: auto; }
         .btn { display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 0 36px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; font-size: 1.05rem; cursor: pointer; position: relative; z-index: 101; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; }
         
-        /* Button: I Choose You (Always Black text on Yellow bg) - Compliant */
+        /* Button: I Choose You */
         .btn-filled { background: var(--c-accent); color: #000; border: none; }
+        
+        /* Light Mode Override for Accessibility */
+        [data-theme="light"] .btn-filled {
+            background: var(--c-accent-text);
+            color: #ffffff;
+        }
+
         .btn-filled:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(255, 203, 5, 0.5); }
+        [data-theme="light"] .btn-filled:hover { box-shadow: 0 8px 20px rgba(180, 83, 9, 0.3); }
         
         /* Button: Pokedex (Outlined) */
         .btn-outlined { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--btn-outlined-border); color: var(--text-primary); }
@@ -212,12 +237,20 @@
         .rarity-star { position: absolute; bottom: 16px; right: 16px; color: #FFD700; font-size: 1rem; }
 
         /* Light Mode Overrides for Cards */
-        [data-theme="light"] .card-face.front { background: #ffffff; border-color: #e4c055; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        [data-theme="light"] .card-face.front { 
+            background: #ffffff; 
+            border-color: var(--c-accent-text); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+        }
         [data-theme="light"] .pk-name { color: #1a1a1a; }
         [data-theme="light"] .pk-hp { color: #e11d48; }
         [data-theme="light"] .pk-img-frame { background: #f4f4f5; border-color: #d4d4d8; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); background-image: radial-gradient(circle, #d4d4d8 1px, transparent 1px); }
         [data-theme="light"] .pk-skill-row { color: #4b5563; border-bottom-color: #e5e7eb; }
-        [data-theme="light"] .card-face.back { background: #ffffff; border-color: #3b4cca; }
+        
+        [data-theme="light"] .card-face.back { 
+            background: #ffffff; 
+            border-color: var(--c-accent-text); 
+        }
         [data-theme="light"] .back-title { color: #3b4cca; }
         [data-theme="light"] .back-desc { color: #4b5563; }
         [data-theme="light"] .pk-chip { background: #f3f4f6; border-color: #e5e7eb; color: #1f2937; }
@@ -260,7 +293,6 @@
             overflow: hidden;
         }
 
-        /* Darken border in Light Mode for visibility */
         [data-theme="light"] .btn-poke-link { border-color: #d1d5db; }
 
         .icon-ball {
@@ -301,8 +333,17 @@
         .footer-link { color: var(--text-secondary); text-decoration: none; margin-left: 32px; transition: color 0.2s; font-weight: 500; }
         .footer-link:hover { color: var(--c-accent-text); }
 
-        /* Walking Pikachu */
-        .pikachu-run { position: absolute; bottom: 0; left: -100px; width: 60px; animation: runAcross 20s linear infinite; opacity: 0.8; z-index: 1; }
+        /* Walking Pikachu Animation */
+        .pikachu-run { 
+            position: absolute; 
+            bottom: 0; 
+            left: -100px; 
+            width: 64px; 
+            animation: runAcross 18s linear infinite; 
+            opacity: 0.9; 
+            z-index: 1; 
+        }
+        
         @keyframes runAcross { 
             0% { left: -100px; transform: scaleX(1); } 
             49% { transform: scaleX(1); }
@@ -317,7 +358,11 @@
             .hero-content { text-align: center; }
             .hero-visual { margin-bottom: 30px; }
             h1 { text-align: center; font-size: 2.5rem; }
-            .hero-desc { margin: 0 auto 40px auto; }
+            /* Updated: Explicitly center text content */
+            .hero-desc { margin: 0 auto 40px auto; text-align: center; }
+            /* Updated: Center buttons in flex container */
+            .btn-group { justify-content: center; width: 100%; }
+            
             .list-item { flex-direction: column; gap: 16px; }
             .item-meta { margin-bottom: 0; }
             .footer-container { flex-direction: column; gap: 32px; }
@@ -368,8 +413,8 @@
                     <div class="hero-anim d-1">
                         <div class="badge">
                             <i class="fas fa-bolt"></i> 
-                            <span class="lang-en">Level 27 UX Designer</span>
-                            <span class="lang-zh">等級 27 UX 設計師</span>
+                            <span class="lang-en">Level 30 UX Designer</span>
+                            <span class="lang-zh">等級 30 UX 設計師</span>
                         </div>
                     </div>
                     
@@ -378,11 +423,12 @@
                     <h1 class="hero-anim d-2 lang-zh">設計大師，<span>就決定是你了！</span></h1>
                     
                     <p class="hero-anim d-3 hero-desc lang-en">
-                        I'm <b>Trainer Linda</b>. Based in Austin, TX. Specializing in Data-Driven UX and Inclusive Design. <br>
+                        I'm <b>Trainer Linda</b>. Based in Austin, TX.<br> Specializing in Data-Driven UX and Inclusive Design. <br>
                         Like a Master Ball, I capture user needs with 100% accuracy.
                     </p>
                     <p class="hero-anim d-3 hero-desc lang-zh">
-                        我是 <b>訓練家 Linda</b>。居住於美國奧斯汀。專注於數據驅動體驗與包容性設計。<br>
+                        我是 <b>訓練家 Linda</b>。居住於美國奧斯汀。<br>
+                        專注於數據驅動體驗與包容性設計。<br>
                         像大師球一樣，我能精準捕捉使用者需求，絕不失誤。
                     </p>
                     
@@ -433,7 +479,9 @@
                                 <p class="back-desc">Creating inclusive prototypes and design systems. Like Smeargle, I can sketch any idea into reality.</p>
                                 <div class="back-chips"><span class="pk-chip">Figma</span><span class="pk-chip">Adobe</span><span class="pk-chip">WCAG</span></div>
                             </div>
-                            <div class="rarity-star"><i class="fas fa-star"></i></div>
+                            <div class="rarity-star">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -461,7 +509,9 @@
                                 <p class="back-desc">Producing data-driven reports to identify accessibility barriers. Optimizing performance like a Porygon upgrade.</p>
                                 <div class="back-chips"><span class="pk-chip">GA4</span><span class="pk-chip">SQL</span><span class="pk-chip">Tableau</span></div>
                             </div>
-                            <div class="rarity-star"><i class="fas fa-star"></i></div>
+                            <div class="rarity-star">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -489,7 +539,9 @@
                                 <p class="back-desc">Conducting usability testing and biometric UX research. I find clues to user behavior like a detective.</p>
                                 <div class="back-chips"><span class="pk-chip">Interviews</span><span class="pk-chip">Surveys</span></div>
                             </div>
-                            <div class="rarity-star"><i class="fas fa-star"></i></div>
+                            <div class="rarity-star">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -517,7 +569,9 @@
                                 <p class="back-desc">Collaborating with cross-functional teams to design scalable solutions with lightning speed.</p>
                                 <div class="back-chips"><span class="pk-chip">Scrum</span><span class="pk-chip">Jira</span></div>
                             </div>
-                            <div class="rarity-star"><i class="fas fa-star"></i></div>
+                            <div class="rarity-star">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -551,7 +605,9 @@
                                     <span class="pk-chip">Prototyping</span>
                                 </div>
                             </div>
-                            <div class="rarity-star"><i class="fas fa-star"></i></div>
+                            <div class="rarity-star">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -586,7 +642,9 @@
                                     <span class="pk-chip">SolidWorks</span>
                                 </div>
                             </div>
-                            <div class="rarity-star"><i class="fas fa-star"></i></div>
+                            <div class="rarity-star">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -812,7 +870,8 @@
 
     <!-- Footer -->
     <footer>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif" class="pikachu-run" alt="Pikachu Running">
+        <!-- Changed Image to Gen 5 Animated Sprite for better running effect -->
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif" class="pikachu-run" alt="Pikachu Running">
         <div class="container footer-container">
             <div>
                 <h3 style="color:var(--text-primary);">Chia-Chi Lin (Linda)</h3>
@@ -850,9 +909,17 @@
             });
         });
 
+        // Mobile interaction for Pokeball
+        const pokeball = document.querySelector('.pokeball-3d');
+        if(pokeball) {
+            pokeball.addEventListener('click', function() {
+                this.classList.toggle('is-active');
+            });
+        }
+
         function handleContact(e) {
             const email = "cl54428@eid.utexas.edu";
-            navigator.clipboard.writeText(email).then(() => alert("Email copied to clipboard!"));
+            // Optional: Only copy if user wants, otherwise mailto works.
         }
 
         const themeBtn = document.getElementById('theme-toggle');
