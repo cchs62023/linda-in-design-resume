@@ -6,6 +6,9 @@
     <meta name="description" content="Portfolio of Chia-Chi Lin (Linda), a UX Designer and Researcher.">
     <title>Chia-Chi Lin (Linda) | Product Designer</title>
     
+    <!-- Pokemon Ball Favicon (SVG Data URI) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='black'/%3E%3Cpath d='M50 2 A48 48 0 0 1 98 50 L2 50 A48 48 0 0 1 50 2' fill='%23ff3333'/%3E%3Cpath d='M2 50 A48 48 0 0 0 98 50 L2 50' fill='white'/%3E%3Crect x='2' y='45' width='96' height='10' fill='%23222'/%3E%3Ccircle cx='50' cy='50' r='14' fill='white' stroke='%23222' stroke-width='5'/%3E%3C/svg%3E">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -270,6 +273,10 @@
             border: 1px solid #000; border-radius: 50%; box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
+        /* --- CUSTOM OVERRIDE: Remove Pokeball bullet in Projects section --- */
+        #projects ul.bullets li::before { display: none; }
+        #projects ul.bullets li { padding-left: 0; }
+
         /* --- Project Buttons (Pokeball Style) --- */
         .project-action { margin-top: 24px; }
         
@@ -320,16 +327,11 @@
             animation: shake 0.5s ease-in-out;
         }
         
-        @keyframes shake {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-20deg); }
-            50% { transform: rotate(20deg); }
-            75% { transform: rotate(-10deg); }
-            100% { transform: rotate(0deg); }
-        }
-        
         footer { margin-top: 120px; padding: 80px 0; border-top: 1px solid var(--glass-border); background: var(--glass-panel); position: relative; overflow: hidden; }
-        .footer-container { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; }
+        
+        /* UPDATED: align-items: flex-end to align text bottom with links */
+        .footer-container { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 2; }
+        
         .footer-link { color: var(--text-secondary); text-decoration: none; margin-left: 32px; transition: color 0.2s; font-weight: 500; }
         .footer-link:hover { color: var(--c-accent-text); }
 
@@ -365,7 +367,7 @@
             
             .list-item { flex-direction: column; gap: 16px; }
             .item-meta { margin-bottom: 0; }
-            .footer-container { flex-direction: column; gap: 32px; }
+            .footer-container { flex-direction: column; gap: 32px; align-items: center; } /* Revert to center on mobile */
             .footer-link { margin: 0 12px; }
         }
 
@@ -461,22 +463,44 @@
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
-                                <span class="pk-name">UI/UX Design</span>
+                                <span class="pk-name">
+                                    <span class="lang-en">UI/UX Design</span>
+                                    <span class="lang-zh">UI/UX 設計</span>
+                                </span>
                                 <span class="pk-hp">HP 120</span>
                             </div>
                             <div class="pk-img-frame">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/235.gif" alt="Smeargle" class="pk-sprite">
                             </div>
-                            <div class="pk-type-bar"><span class="type-badge normal">Normal</span></div>
+                            <div class="pk-type-bar">
+                                <span class="type-badge normal">
+                                    <span class="lang-en">Normal</span>
+                                    <span class="lang-zh">一般</span>
+                                </span>
+                            </div>
                             <div class="pk-skills">
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#A8A878;"></span> <span>Sketch (Wireframing)</span></div>
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#A8A878;"></span> <span>Technician (Figma)</span></div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#A8A878;"></span> 
+                                    <span class="lang-en">Sketch (Wireframing)</span>
+                                    <span class="lang-zh">寫生 (線框圖)</span>
+                                </div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#A8A878;"></span> 
+                                    <span class="lang-en">Technician (Figma)</span>
+                                    <span class="lang-zh">技術高手 (Figma)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-face back">
                             <div class="back-content">
-                                <h3 class="back-title">The Artist</h3>
-                                <p class="back-desc">Creating inclusive prototypes and design systems. Like Smeargle, I can sketch any idea into reality.</p>
+                                <h3 class="back-title">
+                                    <span class="lang-en">The Artist</span>
+                                    <span class="lang-zh">藝術家</span>
+                                </h3>
+                                <p class="back-desc">
+                                    <span class="lang-en">Creating inclusive prototypes and design systems. Like Smeargle, I can sketch any idea into reality.</span>
+                                    <span class="lang-zh">打造具包容性的原型與設計系統。就像圖圖犬一樣，我能描繪出任何點子並將其實現。</span>
+                                </p>
                                 <div class="back-chips"><span class="pk-chip">Figma</span><span class="pk-chip">Adobe</span><span class="pk-chip">WCAG</span></div>
                             </div>
                             <div class="rarity-star">
@@ -491,23 +515,45 @@
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
-                                <span class="pk-name">Data Analytics</span>
+                                <span class="pk-name">
+                                    <span class="lang-en">Data Analytics</span>
+                                    <span class="lang-zh">數據分析</span>
+                                </span>
                                 <span class="pk-hp">HP 110</span>
                             </div>
                             <div class="pk-img-frame">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/233.gif" alt="Porygon2" class="pk-sprite">
                             </div>
-                            <div class="pk-type-bar"><span class="type-badge normal">Normal</span></div>
+                            <div class="pk-type-bar">
+                                <span class="type-badge normal">
+                                    <span class="lang-en">Normal</span>
+                                    <span class="lang-zh">一般</span>
+                                </span>
+                            </div>
                             <div class="pk-skills">
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#A8A878;"></span> <span>Download (GA4)</span></div>
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#A8A878;"></span> <span>Analytic (Hotjar)</span></div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#A8A878;"></span> 
+                                    <span class="lang-en">Download (GA4)</span>
+                                    <span class="lang-zh">下載 (GA4)</span>
+                                </div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#A8A878;"></span> 
+                                    <span class="lang-en">Analytic (Hotjar)</span>
+                                    <span class="lang-zh">分析 (Hotjar)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-face back">
                             <div class="back-content">
-                                <h3 class="back-title">The Virtual</h3>
-                                <p class="back-desc">Producing data-driven reports to identify accessibility barriers. Optimizing performance like a Porygon upgrade.</p>
-                                <div class="back-chips"><span class="pk-chip">GA4</span><span class="pk-chip">SQL</span><span class="pk-chip">Tableau</span></div>
+                                <h3 class="back-title">
+                                    <span class="lang-en">The Virtual</span>
+                                    <span class="lang-zh">虛擬戰士</span>
+                                </h3>
+                                <p class="back-desc">
+                                    <span class="lang-en">Producing data-driven reports to identify accessibility barriers. Optimizing performance like a Porygon upgrade.</span>
+                                    <span class="lang-zh">產出數據驅動報告以識別無障礙屏障。像多邊獸升級一樣優化效能。</span>
+                                </p>
+                                <div class="back-chips"><span class="pk-chip">GA4</span><span class="pk-chip">Power BI</span><span class="pk-chip">Colab</span></div>
                             </div>
                             <div class="rarity-star">
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -521,23 +567,54 @@
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
-                                <span class="pk-name">UX Research</span>
+                                <span class="pk-name">
+                                    <span class="lang-en">UX Research</span>
+                                    <span class="lang-zh">UX 研究</span>
+                                </span>
                                 <span class="pk-hp">HP 100</span>
                             </div>
                             <div class="pk-img-frame">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif" alt="Pikachu" class="pk-sprite">
                             </div>
-                            <div class="pk-type-bar"><span class="type-badge electric">Electric</span></div>
+                            <div class="pk-type-bar">
+                                <span class="type-badge electric">
+                                    <span class="lang-en">Electric</span>
+                                    <span class="lang-zh">電系</span>
+                                </span>
+                            </div>
                             <div class="pk-skills">
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#F8D030;"></span> <span>Thunder Shock (Insight)</span></div>
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#F8D030;"></span> <span>Detect (Eye Tracking)</span></div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#F8D030;"></span> 
+                                    <span class="lang-en">Thunder Shock (Insight)</span>
+                                    <span class="lang-zh">電擊 (洞察)</span>
+                                </div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#F8D030;"></span> 
+                                    <span class="lang-en">Detect (Eye Tracking)</span>
+                                    <span class="lang-zh">看穿 (眼動追蹤)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-face back">
                             <div class="back-content">
-                                <h3 class="back-title">The Investigator</h3>
-                                <p class="back-desc">Conducting usability testing and biometric UX research. I find clues to user behavior like a detective.</p>
-                                <div class="back-chips"><span class="pk-chip">Interviews</span><span class="pk-chip">Surveys</span></div>
+                                <h3 class="back-title">
+                                    <span class="lang-en">The Investigator</span>
+                                    <span class="lang-zh">調查員</span>
+                                </h3>
+                                <p class="back-desc">
+                                    <span class="lang-en">Conducting usability testing and biometric UX research. I find clues to user behavior like a detective.</span>
+                                    <span class="lang-zh">執行易用性測試與生物識別 UX 研究。我像偵探一樣尋找使用者行為的線索。</span>
+                                </p>
+                                <div class="back-chips">
+                                    <span class="pk-chip">
+                                        <span class="lang-en">Interviews</span>
+                                        <span class="lang-zh">訪談</span>
+                                    </span>
+                                    <span class="pk-chip">
+                                        <span class="lang-en">Surveys</span>
+                                        <span class="lang-zh">問卷</span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="rarity-star">
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
@@ -551,22 +628,44 @@
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
-                                <span class="pk-name">Agile Strategy</span>
+                                <span class="pk-name">
+                                    <span class="lang-en">Agile Strategy</span>
+                                    <span class="lang-zh">敏捷策略</span>
+                                </span>
                                 <span class="pk-hp">HP 130</span>
                             </div>
                             <div class="pk-img-frame">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/135.gif" alt="Jolteon" class="pk-sprite">
                             </div>
-                            <div class="pk-type-bar"><span class="type-badge electric">Electric</span></div>
+                            <div class="pk-type-bar">
+                                <span class="type-badge electric">
+                                    <span class="lang-en">Electric</span>
+                                    <span class="lang-zh">電系</span>
+                                </span>
+                            </div>
                             <div class="pk-skills">
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#F8D030;"></span> <span>Quick Feet (Scrum)</span></div>
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#F8D030;"></span> <span>Agility (Jira)</span></div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#F8D030;"></span> 
+                                    <span class="lang-en">Quick Feet (Scrum)</span>
+                                    <span class="lang-zh">飛毛腿 (Scrum)</span>
+                                </div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#F8D030;"></span> 
+                                    <span class="lang-en">Agility (Jira)</span>
+                                    <span class="lang-zh">高速移動 (Jira)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-face back">
                             <div class="back-content">
-                                <h3 class="back-title">The Speedster</h3>
-                                <p class="back-desc">Collaborating with cross-functional teams to design scalable solutions with lightning speed.</p>
+                                <h3 class="back-title">
+                                    <span class="lang-en">The Speedster</span>
+                                    <span class="lang-zh">極速者</span>
+                                </h3>
+                                <p class="back-desc">
+                                    <span class="lang-en">Collaborating with cross-functional teams to design scalable solutions with lightning speed.</span>
+                                    <span class="lang-zh">與跨職能團隊合作，以閃電般的速度設計可擴展的解決方案。</span>
+                                </p>
                                 <div class="back-chips"><span class="pk-chip">Scrum</span><span class="pk-chip">Jira</span></div>
                             </div>
                             <div class="rarity-star">
@@ -581,28 +680,57 @@
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
-                                <span class="pk-name">CMF Design</span>
+                                <span class="pk-name">
+                                    <span class="lang-en">CMF Design</span>
+                                    <span class="lang-zh">CMF 設計</span>
+                                </span>
                                 <span class="pk-hp">HP 95</span>
                             </div>
                             <div class="pk-img-frame">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/133.gif" alt="Eevee" class="pk-sprite">
                             </div>
                             <div class="pk-type-bar">
-                                <span class="type-badge normal">Normal</span>
+                                <span class="type-badge normal">
+                                    <span class="lang-en">Normal</span>
+                                    <span class="lang-zh">一般</span>
+                                </span>
                             </div>
                             <div class="pk-skills">
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#A8A878;"></span> <span>Adaptability (Strategy)</span></div>
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#A8A878;"></span> <span>Baby-Doll Eyes (Appeal)</span></div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#A8A878;"></span> 
+                                    <span class="lang-en">Adaptability (Strategy)</span>
+                                    <span class="lang-zh">適應力 (策略)</span>
+                                </div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#A8A878;"></span> 
+                                    <span class="lang-en">Baby-Doll Eyes (Appeal)</span>
+                                    <span class="lang-zh">圓瞳 (吸引力)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-face back">
                             <div class="back-content">
-                                <h3 class="back-title">The Adapter</h3>
-                                <p class="back-desc">Mastering color, material, and finish strategies to create emotional connections with users.</p>
+                                <h3 class="back-title">
+                                    <span class="lang-en">The Adapter</span>
+                                    <span class="lang-zh">適應者</span>
+                                </h3>
+                                <p class="back-desc">
+                                    <span class="lang-en">Mastering color, material, and finish strategies to create emotional connections with users.</span>
+                                    <span class="lang-zh">精通色彩、材質與表面處理策略，建立與使用者的情感連結。</span>
+                                </p>
                                 <div class="back-chips">
-                                    <span class="pk-chip">Color Strategy</span>
-                                    <span class="pk-chip">Market Research</span>
-                                    <span class="pk-chip">Prototyping</span>
+                                    <span class="pk-chip">
+                                        <span class="lang-en">Color Strategy</span>
+                                        <span class="lang-zh">色彩策略</span>
+                                    </span>
+                                    <span class="pk-chip">
+                                        <span class="lang-en">Market Research</span>
+                                        <span class="lang-zh">市場研究</span>
+                                    </span>
+                                    <span class="pk-chip">
+                                        <span class="lang-en">Prototyping</span>
+                                        <span class="lang-zh">原型製作</span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="rarity-star">
@@ -617,28 +745,57 @@
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
-                                <span class="pk-name">Industrial Design</span>
+                                <span class="pk-name">
+                                    <span class="lang-en">Industrial Design</span>
+                                    <span class="lang-zh">工業設計</span>
+                                </span>
                                 <span class="pk-hp">HP 150</span>
                             </div>
                             <div class="pk-img-frame">
                                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/81.gif" alt="Magnemite" class="pk-sprite">
                             </div>
                             <div class="pk-type-bar">
-                                <span class="type-badge steel">Steel</span>
-                                <span class="type-badge electric">Electric</span>
+                                <span class="type-badge steel">
+                                    <span class="lang-en">Steel</span>
+                                    <span class="lang-zh">鋼系</span>
+                                </span>
+                                <span class="type-badge electric">
+                                    <span class="lang-en">Electric</span>
+                                    <span class="lang-zh">電系</span>
+                                </span>
                             </div>
                             <div class="pk-skills">
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#B8B8D0;"></span> <span>Magnet Bomb (3D Model)</span></div>
-                                <div class="pk-skill-row"><span class="energy-cost" style="background:#B8B8D0;"></span> <span>Flash Cannon (Render)</span></div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#B8B8D0;"></span> 
+                                    <span class="lang-en">Magnet Bomb (3D Model)</span>
+                                    <span class="lang-zh">磁鐵炸彈 (3D 模型)</span>
+                                </div>
+                                <div class="pk-skill-row">
+                                    <span class="energy-cost" style="background:#B8B8D0;"></span> 
+                                    <span class="lang-en">Flash Cannon (Render)</span>
+                                    <span class="lang-zh">加農光炮 (渲染)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-face back">
                             <div class="back-content">
-                                <h3 class="back-title">The Builder</h3>
-                                <p class="back-desc">Bridging form and function through precise physical product design and visualization.</p>
+                                <h3 class="back-title">
+                                    <span class="lang-en">The Builder</span>
+                                    <span class="lang-zh">建造者</span>
+                                </h3>
+                                <p class="back-desc">
+                                    <span class="lang-en">Bridging form and function through precise physical product design and visualization.</span>
+                                    <span class="lang-zh">透過精確的實體產品設計與視覺化，連結形式與功能。</span>
+                                </p>
                                 <div class="back-chips">
-                                    <span class="pk-chip">3D Modeling</span>
-                                    <span class="pk-chip">Rendering</span>
+                                    <span class="pk-chip">
+                                        <span class="lang-en">3D Modeling</span>
+                                        <span class="lang-zh">3D 建模</span>
+                                    </span>
+                                    <span class="pk-chip">
+                                        <span class="lang-en">Rendering</span>
+                                        <span class="lang-zh">渲染</span>
+                                    </span>
                                     <span class="pk-chip">SolidWorks</span>
                                 </div>
                             </div>
@@ -752,6 +909,8 @@
                 <div class="list-item">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Exp. May 2027</span>
+                        <!-- ADDED: Missing Chinese Date -->
+                        <span class="date-badge lang-zh">2027年5月畢業</span>
                         <span class="location lang-en">Austin, USA</span>
                         <span class="location lang-zh">美國，奧斯汀</span>
                     </div>
@@ -760,6 +919,22 @@
                         <h3 class="lang-zh">資訊研究碩士 @ UT Austin</h3>
                         <p class="lang-en">Learning Biometric UX, Info Architecture, and Accessibility Design.</p>
                         <p class="lang-zh">修習生物識別 UX、資訊架構與無障礙設計。</p>
+                    </div>
+                </div>
+
+                <!-- College for Creative Studies -->
+                <div class="list-item">
+                    <div class="item-meta">
+                        <span class="date-badge lang-en">Aug 2017 - May 2018</span>
+                        <span class="date-badge lang-zh">2017年8月 - 2018年5月</span>
+                        <span class="location lang-en">Detroit, USA</span>
+                        <span class="location lang-zh">美國，底特律</span>
+                    </div>
+                    <div class="item-content">
+                        <h3 class="lang-en">Product Design @ College for Creative Studies</h3>
+                        <h3 class="lang-zh">產品設計 @ 美國創意設計學院 (CCS)</h3>
+                        <p class="lang-en">Developed proficiencies in Product Design, Interaction Design and Visual Communication.</p>
+                        <p class="lang-zh">培養產品設計、互動設計與視覺傳達之專業能力。</p>
                     </div>
                 </div>
                 
@@ -875,10 +1050,16 @@
         <div class="container footer-container">
             <div>
                 <h3 style="color:var(--text-primary);">Chia-Chi Lin (Linda)</h3>
-                <p>Based in Austin, TX • Open for Co-op</p>
+                <p>
+                    <span class="lang-en">Based in Austin, TX • Open for Co-op</span>
+                    <span class="lang-zh">現居美國奧斯汀 • 尋求實習機會</span>
+                </p>
             </div>
             <div>
-                <a href="https://linda-in-design.framer.website/" target="_blank" class="footer-link">Portfolio</a>
+                <a href="https://linda-in-design.framer.website/" target="_blank" class="footer-link">
+                    <span class="lang-en">Portfolio</span>
+                    <span class="lang-zh">作品集</span>
+                </a>
                 <a href="https://www.linkedin.com/in/linda-lin-design/" target="_blank" class="footer-link">LinkedIn</a>
                 <a href="mailto:cl54428@eid.utexas.edu" class="footer-link">Email</a>
             </div>
