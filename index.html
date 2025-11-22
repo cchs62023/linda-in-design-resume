@@ -144,35 +144,217 @@
         .icon-btn { background: transparent; border: none; color: var(--text-secondary); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
         .icon-btn:hover { color: var(--c-accent-text); background: rgba(0,0,0,0.05); }
 
-        /* --- Hero Section --- */
+        /* --- Hero Section Layout --- */
         header { min-height: 85vh; display: flex; align-items: center; justify-content: center; position: relative; padding-top: 80px; z-index: 10; }
         .hero-wrapper { display: flex; align-items: center; justify-content: space-between; gap: 40px; width: 100%; }
         .hero-content { flex: 1; text-align: left; z-index: 20; }
 
-        /* 3D CSS Pokeball */
-        .hero-visual { width: 280px; height: 280px; position: relative; perspective: 1000px; display: flex; align-items: center; justify-content: center; }
-        .pokeball-3d {
-            width: 200px; height: 200px;
-            background: radial-gradient(circle at 50% 120%, rgba(0,0,0,0.4) 30%, transparent 70%), linear-gradient(to bottom, #ff0000 45%, #222 45%, #222 55%, #ffffff 55%);
-            border-radius: 50%; border: 6px solid #222; position: relative;
-            box-shadow: inset -10px -10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255,203,5, 0.2);
-            animation: float 6s ease-in-out infinite; transition: transform 0.5s; cursor: pointer;
-        }
-        .pokeball-3d::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: #fff; border: 6px solid #222; border-radius: 50%; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
-        .pokeball-3d::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; background: #fff; border: 3px solid #222; border-radius: 50%; transition: background 0.3s; }
+        /* --------------------------------------------------------- */
+        /* --- HIGH-QUALITY 3D POKEBALL & PARTICLE CSS --- */
+        /* --------------------------------------------------------- */
         
-        .hero-visual:hover .pokeball-3d, 
-        .pokeball-3d.is-active { 
-            transform: scale(1.1) rotate(180deg); 
-            box-shadow: 0 0 50px var(--c-accent); 
+        .hero-visual { 
+            width: 400px; height: 400px; 
+            position: relative; 
+            display: flex; align-items: center; justify-content: center;
+            perspective: 1000px; 
+            z-index: 15;
         }
-        .hero-visual:hover .pokeball-3d::after,
-        .pokeball-3d.is-active::after { 
-            background: #ff0000; 
-            box-shadow: 0 0 15px #ff0000; 
+
+        /* Container for the ball model */
+        .poke-ball-container {
+            width: 280px; height: 280px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: hover-float 5s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
         
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .poke-ball-container:hover {
+            transform: scale(1.02);
+        }
+
+        /* The Sphere Wrapper */
+        .ball-wrapper {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* Top Hemisphere */
+        .half-top {
+            position: absolute; top: 0; left: 0;
+            width: 280px; height: 140px;
+            /* Enhanced Gradient for 3D Sphere look */
+            background: radial-gradient(circle at 35% 100%, #ff5555 0%, #cc0000 50%, #8b0000 100%);
+            border-radius: 280px 280px 0 0;
+            transform-origin: center bottom;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            /* Inset shadow for depth at the edges */
+            box-shadow: inset 0px 5px 20px rgba(255, 255, 255, 0.3),
+                        inset -20px -10px 40px rgba(0,0,0,0.5);
+        }
+        
+        /* Reflection/Highlight on Top */
+        .half-top::before {
+            content: ''; position: absolute; top: 15%; left: 20%;
+            width: 60px; height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            filter: blur(5px);
+            transform: rotate(-45deg);
+        }
+
+        /* Mechanical Rim of top half */
+        .half-top::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 16px;
+            background: linear-gradient(to right, #1a1a1a, #333, #1a1a1a);
+            transform: translateY(50%); z-index: 3;
+            border-top: 1px solid #444;
+        }
+
+        /* Bottom Hemisphere */
+        .half-bottom {
+            position: absolute; top: 140px; left: 0;
+            width: 280px; height: 140px;
+            background: radial-gradient(circle at 35% 0%, #ffffff 0%, #e0e0e0 50%, #999 100%);
+            border-radius: 0 0 280px 280px;
+            transform-origin: center top;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+            box-shadow: inset -20px -20px 40px rgba(0,0,0,0.3),
+                        0 30px 60px rgba(0,0,0,0.5); /* Heavy drop shadow */
+        }
+        
+        /* Mechanical Rim of bottom half */
+        .half-bottom::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 16px;
+            background: linear-gradient(to right, #1a1a1a, #333, #1a1a1a);
+            transform: translateY(-50%); z-index: 3;
+            border-bottom: 1px solid #444;
+        }
+
+        /* The Button Mechanism */
+        .button-assembly {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) translateZ(140px); /* Push to front */
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #111, #333);
+            z-index: 10;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.5);
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid #444;
+        }
+
+        /* The Center White Button */
+        .button-core {
+            width: 54px; height: 54px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #ddd 40%, #999 100%);
+            border: 4px solid #fff;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), 0 0 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+            position: relative;
+            z-index: 11;
+            transition: all 0.2s;
+        }
+
+        /* Inner Energy Core (The light inside) - HIDDEN BY DEFAULT */
+        .energy-core {
+            position: absolute; top: 50%; left: 50%;
+            width: 180px; height: 180px;
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff 0%, #7df9ff 40%, transparent 70%);
+            filter: blur(10px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 0; /* Inside the ball */
+        }
+
+        /* --- UPDATED ANIMATION STATES (Sparkle without opening) --- */
+        
+        /* 
+           Override: Do NOT rotate the top half when "is-open" (sparkling).
+           This ensures the ball stays closed.
+        */
+        .poke-ball-container.is-open .half-top {
+            transform: none;
+        }
+        
+        /* Override: Do NOT rotate the bottom half. */
+        .poke-ball-container.is-open .half-bottom {
+            transform: none;
+        }
+        
+        /* Override: Keep the button in place. */
+        .poke-ball-container.is-open .button-assembly {
+            transform: translate(-50%, -50%) translateZ(140px);
+            opacity: 1;
+        }
+        
+        /* Hide the internal energy core since the ball is closed */
+        .poke-ball-container.is-open .energy-core {
+            display: none;
+        }
+
+        /* 
+           NEW: Emitting Yellow Light from the center button
+           when the ball is clicked (has .is-open class)
+        */
+        .poke-ball-container.is-open .button-core {
+            background: #fffadc; /* Very light yellow center */
+            border-color: #ffcb05; /* Pikachu yellow border */
+            /* Intense glow effect */
+            box-shadow: 0 0 15px #ffcb05, 
+                        0 0 35px #ffcb05, 
+                        0 0 60px rgba(255, 203, 5, 0.8),
+                        inset 0 0 10px rgba(255, 203, 5, 0.5);
+            /* Optional: Slight scale to feel energetic */
+            transform: scale(1.05);
+        }
+
+        /* Pulse highlight on button when closed/hover */
+        .poke-ball-container:not(.is-open) .button-core {
+            animation: breathe 3s infinite;
+        }
+        
+        .poke-ball-container:not(.is-open):hover .button-core {
+            background: #fff;
+            border-color: #ffcb05;
+            box-shadow: 0 0 15px rgba(255, 203, 5, 0.5);
+        }
+
+        /* Particle Canvas */
+        #particle-canvas {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px; height: 800px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes hover-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        
+        @keyframes breathe {
+            0%, 100% { box-shadow: 0 0 5px rgba(255,255,255,0.2), inset 2px 2px 5px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 0 20px rgba(255,255,255,0.6), inset 2px 2px 5px rgba(0,0,0,0.3); }
+        }
+
+        /* --------------------------------------------------------- */
 
         .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--badge-bg); color: var(--badge-text); padding: 8px 16px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 1px; border: 1px solid var(--badge-bg); margin-bottom: 24px; text-transform: uppercase; }
         .hero-desc { font-size: 1.2rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 40px; max-width: 600px; }
@@ -446,8 +628,21 @@
                     </div>
                 </div>
 
+                <!-- High Quality 3D Poke Ball -->
                 <div class="hero-visual hero-anim d-2">
-                    <div class="pokeball-3d" title="Click to Open!"></div>
+                    <!-- UPDATED: Tooltip changed to "Click to Sparkle!" -->
+                    <div class="poke-ball-container" id="main-ball" title="Click to Sparkle!">
+                        <div class="ball-wrapper">
+                            <div class="half-top"></div>
+                            <div class="energy-core"></div>
+                            <div class="half-bottom"></div>
+                            <div class="button-assembly">
+                                <div class="button-core"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Particle Effect Canvas -->
+                    <canvas id="particle-canvas"></canvas>
                 </div>
             </div>
         </header>
@@ -1067,6 +1262,7 @@
     </footer>
 
     <script>
+        /* --- POKEMON CARD 3D TILT --- */
         const cards = document.querySelectorAll('.poke-card-wrap');
         cards.forEach(wrap => {
             const card = wrap.querySelector('.poke-card');
@@ -1090,17 +1286,64 @@
             });
         });
 
-        // Mobile interaction for Pokeball
-        const pokeball = document.querySelector('.pokeball-3d');
-        if(pokeball) {
-            pokeball.addEventListener('click', function() {
-                this.classList.toggle('is-active');
+        /* --- MAIN POKEBALL INTERACTION & PARTICLES --- */
+        const mainBall = document.getElementById('main-ball');
+        const particleCanvas = document.getElementById('particle-canvas');
+        const ctx = particleCanvas.getContext('2d');
+        
+        let particles = [];
+        particleCanvas.width = 800;
+        particleCanvas.height = 800;
+
+        mainBall.addEventListener('click', function() {
+            this.classList.toggle('is-open');
+            
+            if(this.classList.contains('is-open')) {
+                createParticles();
+            }
+        });
+
+        function createParticles() {
+            particles = [];
+            for(let i=0; i<60; i++) {
+                particles.push({
+                    x: particleCanvas.width / 2,
+                    y: particleCanvas.height / 2,
+                    vx: (Math.random() - 0.5) * 15,
+                    vy: (Math.random() - 0.5) * 15,
+                    life: 1.0,
+                    color: `hsl(${Math.random()*60 + 40}, 100%, 70%)`, // Gold/Yellowish
+                    size: Math.random() * 5 + 2
+                });
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0,0, particleCanvas.width, particleCanvas.height);
+            
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.02;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life;
+                ctx.fill();
             });
+
+            particles = particles.filter(p => p.life > 0);
+            if(particles.length > 0) {
+                requestAnimationFrame(animateParticles);
+            } else {
+                ctx.clearRect(0,0, particleCanvas.width, particleCanvas.height);
+            }
         }
 
         function handleContact(e) {
-            const email = "cl54428@eid.utexas.edu";
-            // Optional: Only copy if user wants, otherwise mailto works.
+            // Mailto logic handles this automatically
         }
 
         const themeBtn = document.getElementById('theme-toggle');
