@@ -92,7 +92,13 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        *:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; border-radius: 4px; }
+        /* --- ACCESSIBILITY FOCUS STYLES --- */
+        *:focus-visible { 
+            outline: 3px solid var(--focus-ring); 
+            outline-offset: 4px; 
+            border-radius: 4px; 
+            z-index: 9999;
+        }
 
         /* --- Background Motion --- */
         .aurora-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden; pointer-events: none; }
@@ -162,6 +168,7 @@
         }
 
         /* Container for the ball model */
+        /* Updated for Keyboard Accessibility */
         .poke-ball-container {
             width: 280px; height: 280px;
             position: relative;
@@ -169,10 +176,18 @@
             animation: hover-float 5s ease-in-out infinite;
             cursor: pointer;
             transition: transform 0.3s ease;
+            outline: none; /* Focus handled by :focus-visible on this or inner */
         }
         
-        .poke-ball-container:hover {
+        .poke-ball-container:hover, .poke-ball-container:focus-visible {
             transform: scale(1.02);
+        }
+        
+        /* Ensure focus ring shows up nicely around round object */
+        .poke-ball-container:focus-visible {
+            outline: 4px solid var(--focus-ring);
+            outline-offset: 10px;
+            border-radius: 50%;
         }
 
         /* The Sphere Wrapper */
@@ -282,35 +297,21 @@
         }
 
         /* --- UPDATED ANIMATION STATES (Sparkle without opening) --- */
-        
-        /* 
-           Override: Do NOT rotate the top half when "is-open" (sparkling).
-           This ensures the ball stays closed.
-        */
         .poke-ball-container.is-open .half-top {
             transform: none;
         }
-        
-        /* Override: Do NOT rotate the bottom half. */
         .poke-ball-container.is-open .half-bottom {
             transform: none;
         }
-        
-        /* Override: Keep the button in place. */
         .poke-ball-container.is-open .button-assembly {
             transform: translate(-50%, -50%) translateZ(140px);
             opacity: 1;
         }
-        
-        /* Hide the internal energy core since the ball is closed */
         .poke-ball-container.is-open .energy-core {
             display: none;
         }
 
-        /* 
-           NEW: Emitting Yellow Light from the center button
-           when the ball is clicked (has .is-open class)
-        */
+        /* Yellow Light from Center Button */
         .poke-ball-container.is-open .button-core {
             background: #fffadc; /* Very light yellow center */
             border-color: #ffcb05; /* Pikachu yellow border */
@@ -380,7 +381,21 @@
 
         /* --- POKEMON CARDS --- */
         .poke-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; perspective: 1000px; padding: 20px 0; }
-        .poke-card-wrap { width: 100%; height: 450px; position: relative; cursor: pointer; transform-style: preserve-3d; }
+        
+        /* Accessibility update: focusable card wrap */
+        .poke-card-wrap { 
+            width: 100%; height: 450px; 
+            position: relative; 
+            cursor: pointer; 
+            transform-style: preserve-3d;
+            border-radius: 16px;
+        }
+        /* Custom focus ring for cards */
+        .poke-card-wrap:focus-visible {
+            outline: 4px solid var(--focus-ring);
+            outline-offset: 8px;
+        }
+        
         .poke-card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); border-radius: 16px; box-shadow: var(--glass-shadow); }
         .poke-card-wrap:hover .poke-card { box-shadow: 0 0 30px rgba(255, 203, 5, 0.2); }
         .poke-card.is-flipped { transform: rotateY(180deg); }
@@ -583,7 +598,8 @@
         <div class="nav-container">
             <a href="#" class="nav-logo">LINDA.DESIGN</a>
             <div class="nav-actions">
-                <button id="lang-toggle" class="icon-btn"><span class="lang-en">EN</span><span class="lang-zh">文</span></button>
+                <!-- Added aria-label for accessibility -->
+                <button id="lang-toggle" class="icon-btn" aria-label="Switch Language"><span class="lang-en">EN</span><span class="lang-zh">文</span></button>
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme"><i class="fas fa-sun"></i></button>
             </div>
         </div>
@@ -630,8 +646,8 @@
 
                 <!-- High Quality 3D Poke Ball -->
                 <div class="hero-visual hero-anim d-2">
-                    <!-- UPDATED: Tooltip changed to "Click to Sparkle!" -->
-                    <div class="poke-ball-container" id="main-ball" title="Click to Sparkle!">
+                    <!-- ACCESSIBILITY FIX: Added tabindex=0, role=button, and aria-label. -->
+                    <div class="poke-ball-container" id="main-ball" title="Click to Sparkle!" tabindex="0" role="button" aria-label="Interactive Poké Ball: Click to sparkle">
                         <div class="ball-wrapper">
                             <div class="half-top"></div>
                             <div class="energy-core"></div>
@@ -641,8 +657,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Particle Effect Canvas -->
-                    <canvas id="particle-canvas"></canvas>
+                    <!-- ACCESSIBILITY FIX: Added aria-hidden=true to hide decorative canvas from screen readers -->
+                    <canvas id="particle-canvas" aria-hidden="true"></canvas>
                 </div>
             </div>
         </header>
@@ -654,7 +670,8 @@
             
             <div class="poke-grid reveal">
                 <!-- Card 1: UI/UX -->
-                <div class="poke-card-wrap">
+                <!-- Added tabindex="0" and aria-label for keyboard accessibility -->
+                <div class="poke-card-wrap" tabindex="0" role="button" aria-pressed="false" aria-label="UI/UX Design Skill Card. Press Enter to flip for details.">
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
@@ -706,7 +723,7 @@
                 </div>
 
                 <!-- Card 2: Data -->
-                <div class="poke-card-wrap">
+                <div class="poke-card-wrap" tabindex="0" role="button" aria-pressed="false" aria-label="Data Analytics Skill Card. Press Enter to flip for details.">
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
@@ -758,7 +775,7 @@
                 </div>
 
                 <!-- Card 3: Research -->
-                <div class="poke-card-wrap">
+                <div class="poke-card-wrap" tabindex="0" role="button" aria-pressed="false" aria-label="UX Research Skill Card. Press Enter to flip for details.">
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
@@ -819,7 +836,7 @@
                 </div>
 
                 <!-- Card 4: Agile -->
-                <div class="poke-card-wrap">
+                <div class="poke-card-wrap" tabindex="0" role="button" aria-pressed="false" aria-label="Agile Strategy Skill Card. Press Enter to flip for details.">
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
@@ -871,7 +888,7 @@
                 </div>
 
                 <!-- Card 5: CMF Design (Eevee) -->
-                <div class="poke-card-wrap">
+                <div class="poke-card-wrap" tabindex="0" role="button" aria-pressed="false" aria-label="CMF Design Skill Card. Press Enter to flip for details.">
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
@@ -936,7 +953,7 @@
                 </div>
 
                 <!-- Card 6: Industrial Design (Magnemite) -->
-                <div class="poke-card-wrap">
+                <div class="poke-card-wrap" tabindex="0" role="button" aria-pressed="false" aria-label="Industrial Design Skill Card. Press Enter to flip for details.">
                     <div class="poke-card">
                         <div class="card-face front">
                             <div class="pk-header">
@@ -1010,7 +1027,8 @@
             <h2 class="reveal lang-zh">道館徽章 (工作經歷)</h2>
 
             <div class="list-card reveal">
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Apr 2021 - Jul 2025</span>
                         <span class="date-badge lang-zh">2021年4月 - 2025年7月</span>
@@ -1032,7 +1050,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Apr 2023 - Oct 2023</span>
                         <span class="date-badge lang-zh">2023年4月 - 2023年10月</span>
@@ -1054,7 +1073,8 @@
                 </div>
                 
                 <!-- Experience: Clevo -->
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Feb 2020 - Mar 2021</span>
                         <span class="date-badge lang-zh">2020年2月 - 2021年3月</span>
@@ -1074,7 +1094,8 @@
                 </div>
 
                 <!-- Experience: Fubon -->
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Mar 2019 - Jun 2019</span>
                         <span class="date-badge lang-zh">2019年3月 - 2019年6月</span>
@@ -1101,7 +1122,8 @@
             <h2 class="reveal lang-zh">訓練家學校 (學歷)</h2>
             
             <div class="list-card reveal">
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Exp. May 2027</span>
                         <!-- ADDED: Missing Chinese Date -->
@@ -1118,7 +1140,8 @@
                 </div>
 
                 <!-- College for Creative Studies -->
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Aug 2017 - May 2018</span>
                         <span class="date-badge lang-zh">2017年8月 - 2018年5月</span>
@@ -1134,7 +1157,8 @@
                 </div>
                 
                 <!-- Education: NKNU -->
-                <div class="list-item">
+                <!-- UPDATED: Added tabindex="0" and role="article" -->
+                <div class="list-item" tabindex="0" role="article">
                     <div class="item-meta">
                         <span class="date-badge lang-en">Sep 2013 - Jun 2017</span>
                         <span class="date-badge lang-zh">2013年9月 - 2017年6月</span>
@@ -1266,6 +1290,8 @@
         const cards = document.querySelectorAll('.poke-card-wrap');
         cards.forEach(wrap => {
             const card = wrap.querySelector('.poke-card');
+            
+            // Mouse Movement logic (visual only)
             wrap.addEventListener('mousemove', (e) => {
                 if (card.classList.contains('is-flipped')) return;
                 const rect = wrap.getBoundingClientRect();
@@ -1280,9 +1306,25 @@
             wrap.addEventListener('mouseleave', () => {
                 if (!card.classList.contains('is-flipped')) card.style.transform = 'rotateX(0) rotateY(0)';
             });
-            wrap.addEventListener('click', () => {
+
+            // Function to handle flipping
+            const flipCard = () => {
                 card.classList.toggle('is-flipped');
-                card.style.transform = card.classList.contains('is-flipped') ? 'rotateY(180deg)' : 'rotateY(0deg)';
+                const isFlipped = card.classList.contains('is-flipped');
+                card.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+                wrap.setAttribute('aria-pressed', isFlipped);
+            };
+
+            // Click listener
+            wrap.addEventListener('click', flipCard);
+
+            // ACCESSIBILITY: Keyboard Listener for Cards
+            wrap.addEventListener('keydown', (e) => {
+                // Toggle on Enter or Space
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault(); // Prevent scrolling for Space
+                    flipCard();
+                }
             });
         });
 
@@ -1295,11 +1337,20 @@
         particleCanvas.width = 800;
         particleCanvas.height = 800;
 
-        mainBall.addEventListener('click', function() {
-            this.classList.toggle('is-open');
-            
-            if(this.classList.contains('is-open')) {
+        function triggerBallAction() {
+            mainBall.classList.toggle('is-open');
+            if(mainBall.classList.contains('is-open')) {
                 createParticles();
+            }
+        }
+
+        mainBall.addEventListener('click', triggerBallAction);
+        
+        // ACCESSIBILITY: Keyboard Listener for Main Ball
+        mainBall.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                triggerBallAction();
             }
         });
 
