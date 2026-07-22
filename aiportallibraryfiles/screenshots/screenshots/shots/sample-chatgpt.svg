@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" font-family="Inter, Segoe UI, sans-serif">
+  <rect width="1280" height="860" fill="#ffffff"/>
+  <!-- sidebar -->
+  <rect width="260" height="860" fill="#f9f9f9"/>
+  <rect x="20" y="24" width="220" height="34" rx="8" fill="#ececec"/>
+  <text x="36" y="46" font-size="13" fill="#6b6b6b">+ New chat</text>
+  <g fill="#ececec">
+    <rect x="20" y="76" width="220" height="18" rx="5"/>
+    <rect x="20" y="104" width="180" height="18" rx="5"/>
+    <rect x="20" y="132" width="200" height="18" rx="5"/>
+    <rect x="20" y="160" width="150" height="18" rx="5"/>
+  </g>
+  <circle cx="40" cy="820" r="14" fill="#10a37f"/>
+  <text x="64" y="825" font-size="13" fill="#3b3b3b">Upgrade plan</text>
+  <!-- main -->
+  <text x="640" y="40" text-anchor="middle" font-size="15" fill="#8e8ea0">ChatGPT 4o ▾</text>
+  <text x="640" y="360" text-anchor="middle" font-size="30" font-weight="600" fill="#2d333a">What can I help with?</text>
+  <!-- composer -->
+  <rect x="360" y="720" width="560" height="60" rx="30" fill="#f4f4f4" stroke="#e3e3e3"/>
+  <text x="392" y="756" font-size="15" fill="#9a9a9a">Message ChatGPT</text>
+  <circle cx="884" cy="750" r="18" fill="#10a37f"/>
+  <path d="M884 742 l7 8 h-4 v7 h-6 v-7 h-4 z" fill="#fff"/>
+  <!-- suggestion chips -->
+  <g fill="#f4f4f4" stroke="#e6e6e6">
+    <rect x="430" y="420" width="180" height="44" rx="12"/>
+    <rect x="640" y="420" width="210" height="44" rx="12"/>
+  </g>
+  <text x="452" y="447" font-size="13" fill="#5b5b5b">✳ Create image</text>
+  <text x="662" y="447" font-size="13" fill="#5b5b5b">📝 Summarize text</text>
+</svg>
