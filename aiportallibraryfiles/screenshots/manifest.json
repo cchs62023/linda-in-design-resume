@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-07-20T09:00:00.000Z",
+  "site": "https://cchs62023.github.io/linda-in-design-resume/screenshots/",
+  "note": "Seeded with three SAMPLE mockups so the gallery renders before the first automated run. The weekly workflow replaces these with real full-page PNG captures.",
+  "captures": [
+    {
+      "id": "chatgpt-2026-07-20",
+      "slug": "chatgpt",
+      "portal": "ChatGPT",
+      "company": "OpenAI",
+      "url": "https://chatgpt.com/",
+      "brand": "#10a37f",
+      "week": "2026-07-20",
+      "capturedAt": "2026-07-20T09:00:00.000Z",
+      "image": "shots/sample-chatgpt.svg",
+      "width": 1280,
+      "height": 860,
+      "palette": ["#ffffff", "#f9f9f9", "#10a37f", "#ececec", "#2d333a"],
+      "analysis": "ChatGPT leads with a near-blank white canvas and a single centered prompt — 'What can I help with?' — deferring all chrome to a muted left rail. Hierarchy is radically reductive: one composer, a couple of suggestion chips, and the model switcher tucked at top. The green send affordance is the only saturated element, pulling the eye straight to the primary action.",
+      "analysisBy": "sample",
+      "status": "ok",
+      "sample": true
+    },
+    {
+      "id": "claude-2026-07-20",
+      "slug": "claude",
+      "portal": "Claude",
+      "company": "Anthropic",
+      "url": "https://claude.ai/",
+      "brand": "#d97757",
+      "week": "2026-07-20",
+      "capturedAt": "2026-07-20T09:00:00.000Z",
+      "image": "shots/sample-claude.svg",
+      "width": 1280,
+      "height": 860,
+      "palette": ["#f4f3ee", "#faf9f5", "#d97757", "#3d3929", "#e6e2d6"],
+      "analysis": "Claude opts for a warm, paper-like cream ground rather than clinical white, giving the surface an editorial, softer feel. A time-aware greeting and a raised composer card create a calm focal point, while intent chips (Write / Learn / Code) frame the tool as task-oriented. The terracotta accent is used sparingly on the logo, primary button, and send control to keep a single consistent brand thread.",
+      "analysisBy": "sample",
+      "status": "ok",
+      "sample": true
+    },
+    {
+      "id": "gemini-2026-07-20",
+      "slug": "gemini",
+      "portal": "Gemini",
+      "company": "Google",
+      "url": "https://gemini.google.com/",
+      "brand": "#4285f4",
+      "week": "2026-07-20",
+      "capturedAt": "2026-07-20T09:00:00.000Z",
+      "image": "shots/sample-gemini.svg",
+      "width": 1280,
+      "height": 860,
+      "palette": ["#ffffff", "#f0f4f9", "#4285f4", "#9b72cb", "#d96570"],
+      "analysis": "Gemini anchors the page with an oversized gradient greeting that doubles as brand signature, spanning Google's blue-to-magenta spectrum. The layout is left-aligned and roomier than its peers, pairing the hero with a row of suggestion cards that preview capabilities rather than starting blank. The rounded 'Ask Gemini' pill and pill-shaped new-chat button echo Material 3's fully-rounded geometry throughout.",
+      "analysisBy": "sample",
+      "status": "ok",
+      "sample": true
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A weekly screenshot library of AI / LLM company portals, each with a brief design analysis. Curated by Linda (Chia-Chi Lin)." />
+  <title>AI Portal Screenshot Library · Linda.Design</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23050505'/%3E%3Crect x='24' y='30' width='52' height='40' rx='6' fill='none' stroke='%23ffcb05' stroke-width='6'/%3E%3Ccircle cx='40' cy='46' r='6' fill='%23ffcb05'/%3E%3Cpath d='M30 64 L46 50 L58 60 L70 46' fill='none' stroke='%23ffcb05' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #050505;
+      --bg-elev: #0e0e12;
+      --text-primary: #ffffff;
+      --text-secondary: #d4d4d8;
+      --text-tertiary: #8b8b93;
+      --accent: #ffcb05;
+      --border: rgba(255, 255, 255, 0.10);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --panel: rgba(20, 20, 28, 0.72);
+      --card-radius: 18px;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-main);
+      color: var(--text-secondary);
+      font-family: "Inter", system-ui, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    /* aurora backdrop */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(50% 40% at 15% 8%, rgba(255, 203, 5, 0.14), transparent 70%),
+        radial-gradient(45% 45% at 88% 12%, rgba(59, 76, 202, 0.20), transparent 70%),
+        radial-gradient(50% 50% at 60% 100%, rgba(217, 119, 87, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---- top bar ---- */
+    .topbar {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(5, 5, 5, 0.72);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { font-family: "Rajdhani", sans-serif; font-weight: 700; letter-spacing: 1px; color: var(--text-primary); font-size: 1.05rem; }
+    .brand span { color: var(--accent); }
+    .back-link { font-size: 0.85rem; color: var(--text-tertiary); display: inline-flex; align-items: center; gap: 8px; transition: color .2s; }
+    .back-link:hover { color: var(--accent); }
+
+    /* ---- hero ---- */
+    header.hero { padding: 72px 0 36px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: "Rajdhani", sans-serif; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      font-size: 0.72rem; color: var(--accent);
+      border: 1px solid var(--border-strong); border-radius: 999px; padding: 6px 14px;
+      background: rgba(255, 203, 5, 0.06);
+    }
+    header.hero h1 {
+      font-family: "Rajdhani", sans-serif; font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; color: var(--text-primary);
+      margin: 20px 0 14px; letter-spacing: -0.5px;
+    }
+    header.hero h1 em { color: var(--accent); font-style: normal; }
+    header.hero p { max-width: 640px; color: var(--text-tertiary); font-size: 1.02rem; }
+    .stats { display: flex; gap: 28px; margin-top: 28px; flex-wrap: wrap; }
+    .stat .n { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 1.9rem; color: var(--text-primary); line-height: 1; }
+    .stat .l { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-tertiary); margin-top: 6px; }
+
+    /* ---- filters ---- */
+    .filters { position: sticky; top: 64px; z-index: 30; padding: 16px 0; background: linear-gradient(var(--bg-main), rgba(5,5,5,0.86)); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+    .filters .wrap { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .chip {
+      font-size: 0.82rem; color: var(--text-secondary);
+      border: 1px solid var(--border-strong); background: var(--panel);
+      border-radius: 999px; padding: 7px 15px; cursor: pointer;
+      transition: all .18s; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--text-primary); }
+    .chip.active { background: var(--accent); color: #101010; border-color: var(--accent); font-weight: 600; }
+    .chip .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .chip .count { opacity: 0.6; font-size: 0.75rem; }
+    .spacer { flex: 1; }
+    select.week-select {
+      font-family: inherit; font-size: 0.82rem; color: var(--text-secondary);
+      background: var(--panel); border: 1px solid var(--border-strong); border-radius: 999px;
+      padding: 8px 14px; cursor: pointer;
+    }
+
+    /* ---- week groups ---- */
+    .week-group { padding: 26px 0 6px; }
+    .week-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
+    .week-head h2 { font-family: "Rajdhani", sans-serif; font-weight: 700; font-size: 1.35rem; color: var(--text-primary); letter-spacing: 0.5px; }
+    .week-head .sub { font-size: 0.8rem; color: var(--text-tertiary); }
+    .week-head .rule { flex: 1; height: 1px; background: var(--border); }
+
+    /* ---- grid ---- */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 22px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: var(--card-radius);
+      overflow: hidden; display: flex; flex-direction: column; transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+    .shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #17171d; cursor: zoom-in; border-bottom: 1px solid var(--border); }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .4s; }
+    .card:hover .shot img { transform: scale(1.03); }
+    .shot .zoom { position: absolute; right: 10px; bottom: 10px; width: 30px; height: 30px; border-radius: 8px; background: rgba(0,0,0,0.55); display: grid; place-items: center; color: #fff; font-size: 0.8rem; opacity: 0; transition: opacity .2s; }
+    .card:hover .shot .zoom { opacity: 1; }
+    .badge-sample { position: absolute; top: 10px; left: 10px; font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #101010; background: var(--accent); padding: 3px 8px; border-radius: 6px; }
+    .badge-error { position: absolute; inset: 0; display: grid; place-items: center; color: #ff8f8f; font-size: 0.85rem; background: repeating-linear-gradient(45deg, #1a1216, #1a1216 12px, #201418 12px, #201418 24px); }
+
+    .card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .card-top { display: flex; align-items: center; gap: 10px; }
+    .logo-dot { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font-weight: 700; color: #fff; font-size: 0.9rem; flex-shrink: 0; font-family: "Rajdhani", sans-serif; }
+    .card-top .meta { min-width: 0; }
+    .card-top .p-name { color: var(--text-primary); font-weight: 600; font-size: 1rem; line-height: 1.1; }
+    .card-top .p-co { font-size: 0.75rem; color: var(--text-tertiary); }
+    .card-top .open { margin-left: auto; color: var(--text-tertiary); font-size: 0.78rem; border: 1px solid var(--border-strong); border-radius: 8px; padding: 4px 9px; transition: all .18s; white-space: nowrap; }
+    .card-top .open:hover { color: var(--accent); border-color: var(--accent); }
+
+    .analysis { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+    .analysis-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-tertiary); display: flex; align-items: center; gap: 7px; margin-bottom: -4px; }
+    .analysis-label::before { content: ""; width: 14px; height: 1px; background: var(--accent); }
+
+    .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 4px; }
+    .palette { display: flex; gap: 4px; }
+    .palette span { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15); }
+    .by { font-size: 0.68rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; }
+    .by b { color: var(--text-secondary); }
+
+    /* ---- empty ---- */
+    .empty { text-align: center; padding: 80px 20px; color: var(--text-tertiary); }
+    .empty h3 { font-family: "Rajdhani", sans-serif; color: var(--text-primary); font-size: 1.4rem; margin-bottom: 8px; }
+    .empty code { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; font-size: 0.85rem; color: var(--accent); }
+
+    /* ---- lightbox ---- */
+    .lightbox { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,0.9); display: none; align-items: flex-start; justify-content: center; overflow: auto; padding: 40px 20px; }
+    .lightbox.open { display: flex; }
+    .lightbox .lb-inner { max-width: 1000px; width: 100%; }
+    .lightbox img { width: 100%; border-radius: 12px; border: 1px solid var(--border-strong); display: block; }
+    .lightbox .lb-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; color: var(--text-secondary); }
+    .lightbox .lb-close { margin-left: auto; cursor: pointer; border: 1px solid var(--border-strong); border-radius: 8px; padding: 6px 12px; font-size: 0.85rem; }
+    .lightbox .lb-close:hover { border-color: var(--accent); color: var(--accent); }
+    .lightbox .lb-analysis { color: var(--text-tertiary); font-size: 0.9rem; margin-top: 14px; max-width: 1000px; }
+
+    /* ---- footer ---- */
+    footer { border-top: 1px solid var(--border); margin-top: 60px; padding: 30px 0 50px; color: var(--text-tertiary); font-size: 0.82rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      header.hero { padding: 48px 0 24px; }
+      .filters { top: 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <a class="brand" href="../index.html">LINDA<span>.DESIGN</span></a>
+      <a class="back-link" href="../index.html">← Back to portfolio</a>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">📸 Weekly Capture · AI / LLM Portals</span>
+      <h1>AI Portal <em>Screenshot Library</em></h1>
+      <p>
+        Every week, an automated job captures the landing experiences of the major AI chat portals —
+        ChatGPT, Claude, Gemini and more — then writes a brief design analysis of each and pings Slack.
+        A living reference for how conversational-AI interfaces evolve over time.
+      </p>
+      <div class="stats" id="stats"></div>
+    </div>
+  </header>
+
+  <nav class="filters" aria-label="Filters">
+    <div class="wrap">
+      <div id="portal-chips" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+      <span class="spacer"></span>
+      <select id="week-select" class="week-select" aria-label="Filter by week"></select>
+    </div>
+  </nav>
+
+  <main class="wrap" id="library">
+    <div class="empty"><h3>Loading library…</h3></div>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+    <div class="lb-inner">
+      <div class="lb-bar">
+        <strong id="lb-title"></strong>
+        <span id="lb-date" style="color:var(--text-tertiary);font-size:.85rem;"></span>
+        <span class="lb-close" id="lb-close">Close ✕</span>
+      </div>
+      <img id="lb-img" alt="" />
+      <p class="lb-analysis" id="lb-analysis"></p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>AI Portal Screenshot Library — a side experiment by <a href="../index.html">Chia-Chi Lin (Linda)</a>.</span>
+      <span>Captured with Playwright · analysis by Claude · notified via Slack.</span>
+    </div>
+  </footer>
+
+  <script>
+    const PORTAL_QUERY = new URLSearchParams(location.search);
+    const state = { data: null, portal: 'all', week: PORTAL_QUERY.get('week') || 'all' };
+
+    const fmtWeek = (iso) => {
+      if (!iso) return 'Undated';
+      const d = new Date(iso + 'T00:00:00Z');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    };
+    const initials = (name) => name.replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    async function load() {
+      try {
+        const res = await fetch('manifest.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('manifest ' + res.status);
+        state.data = await res.json();
+      } catch (e) {
+        document.getElementById('library').innerHTML =
+          `<div class="empty"><h3>No captures yet</h3><p>Once the weekly job runs, screenshots and their analyses appear here.<br>Run it manually with <code>node scripts/capture.mjs</code> or the GitHub Action.</p></div>`;
+        return;
+      }
+      buildFilters();
+      render();
+    }
+
+    function buildFilters() {
+      const caps = state.data.captures || [];
+      const byPortal = {};
+      caps.forEach((c) => { (byPortal[c.portal] = byPortal[c.portal] || { n: 0, brand: c.brand }).n++; });
+      const chips = document.getElementById('portal-chips');
+      const mk = (key, label, count, brand) => {
+        const b = document.createElement('button');
+        b.className = 'chip' + (state.portal === key ? ' active' : '');
+        b.innerHTML = (brand ? `<span class="dot" style="background:${esc(brand)}"></span>` : '') + esc(label) + ` <span class="count">${count}</span>`;
+        b.onclick = () => { state.portal = key; syncChips(); render(); };
+        return b;
+      };
+      chips.innerHTML = '';
+      chips.appendChild(mk('all', 'All portals', caps.length, null));
+      Object.entries(byPortal).sort((a, b) => b[1].n - a[1].n).forEach(([name, info]) => chips.appendChild(mk(name, name, info.n, info.brand)));
+
+      const weeks = [...new Set(caps.map((c) => c.week))].sort().reverse();
+      const sel = document.getElementById('week-select');
+      sel.innerHTML = `<option value="all">All weeks (${weeks.length})</option>` +
+        weeks.map((w) => `<option value="${w}">Week of ${fmtWeek(w)}</option>`).join('');
+      if (weeks.includes(state.week)) sel.value = state.week; else state.week = 'all';
+      sel.onchange = () => { state.week = sel.value; render(); };
+
+      // stats
+      document.getElementById('stats').innerHTML = [
+        [caps.filter((c) => c.status === 'ok').length, 'Screenshots'],
+        [Object.keys(byPortal).length, 'Portals tracked'],
+        [weeks.length, 'Weeks archived'],
+      ].map(([n, l]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+    }
+
+    function syncChips() {
+      document.querySelectorAll('#portal-chips .chip').forEach((c) => {
+        const label = c.textContent.replace(/\d+$/, '').trim();
+        const key = label === 'All portals' ? 'all' : label;
+        c.classList.toggle('active', key === state.portal);
+      });
+    }
+
+    function render() {
+      const lib = document.getElementById('library');
+      let caps = (state.data.captures || []).slice();
+      if (state.portal !== 'all') caps = caps.filter((c) => c.portal === state.portal);
+      if (state.week !== 'all') caps = caps.filter((c) => c.week === state.week);
+      if (!caps.length) { lib.innerHTML = `<div class="empty"><h3>Nothing matches that filter</h3><p>Try a different portal or week.</p></div>`; return; }
+
+      const weeks = [...new Set(caps.map((c) => c.week))].sort().reverse();
+      const ordered = [];
+      lib.innerHTML = weeks.map((w) => {
+        const group = caps.filter((c) => c.week === w);
+        group.forEach((c) => ordered.push(c));
+        return `<section class="week-group">
+          <div class="week-head">
+            <h2>Week of ${fmtWeek(w)}</h2>
+            <span class="sub">${group.length} portal${group.length === 1 ? '' : 's'}</span>
+            <span class="rule"></span>
+          </div>
+          <div class="grid">${group.map(card).join('')}</div>
+        </section>`;
+      }).join('');
+
+      // bind lightbox to each shot, indexed against the week-grouped render order
+      let i = 0;
+      lib.querySelectorAll('.shot').forEach((el) => {
+        const cap = ordered[i++];
+        const open = () => openLightbox(cap);
+        el.onclick = open;
+        el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } };
+      });
+    }
+
+    function card(c) {
+      const brand = c.brand || '#888';
+      const shot = c.status === 'ok' && c.image
+        ? `<img loading="lazy" src="${esc(c.image)}" alt="${esc(c.portal)} portal screenshot, week of ${esc(c.week)}" />
+           <div class="zoom">⤢</div>${c.sample ? '<span class="badge-sample">Sample</span>' : ''}`
+        : `<div class="badge-error">⚠ ${esc(c.error || 'capture failed')}</div>`;
+      const palette = (c.palette || []).slice(0, 5).map((p) => `<span style="background:${esc(p)}" title="${esc(p)}"></span>`).join('');
+      const byMap = { claude: 'Claude', heuristic: 'auto', sample: 'sample', manual: 'Linda', system: 'system' };
+      return `<article class="card">
+        <div class="shot" role="button" tabindex="0" aria-label="Enlarge ${esc(c.portal)} screenshot">${shot}</div>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="logo-dot" style="background:${esc(brand)}">${esc(initials(c.portal))}</div>
+            <div class="meta">
+              <div class="p-name">${esc(c.portal)}</div>
+              <div class="p-co">${esc(c.company || '')}</div>
+            </div>
+            <a class="open" href="${esc(c.url)}" target="_blank" rel="noopener">Visit ↗</a>
+          </div>
+          <div class="analysis-label">Design analysis</div>
+          <p class="analysis">${esc(c.analysis)}</p>
+          <div class="card-foot">
+            <div class="palette">${palette}</div>
+            <div class="by">by <b>${esc(byMap[c.analysisBy] || c.analysisBy || '—')}</b></div>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function openLightbox(c) {
+      if (!c || c.status !== 'ok' || !c.image) return;
+      document.getElementById('lb-title').textContent = c.portal + ' · ' + (c.company || '');
+      document.getElementById('lb-date').textContent = 'Week of ' + fmtWeek(c.week);
+      const img = document.getElementById('lb-img');
+      img.src = c.image; img.alt = c.portal + ' full-page screenshot';
+      document.getElementById('lb-analysis').textContent = c.analysis || '';
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lb-close').onclick = closeLightbox;
+    document.getElementById('lightbox').onclick = (e) => { if (e.target.id === 'lightbox') closeLightbox(); };
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+    load();
+  </script>
+</body>
+</html>

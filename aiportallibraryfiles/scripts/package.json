@@ -1,0 +1,15 @@
+{
+  "name": "ai-portal-screenshot-library",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Weekly screenshots of AI/LLM company portals, with a brief design analysis and a Slack notification.",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "capture:one": "node capture.mjs --only",
+    "capture:dry": "node capture.mjs --no-slack"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}

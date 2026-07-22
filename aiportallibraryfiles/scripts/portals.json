@@ -1,0 +1,68 @@
+{
+  "$comment": "The AI / LLM company portals captured every week. Add or remove entries freely. 'waitFor' ms lets slow pages settle before the shot. 'fullPage' captures the entire scroll height.",
+  "portals": [
+    {
+      "slug": "chatgpt",
+      "name": "ChatGPT",
+      "company": "OpenAI",
+      "url": "https://chatgpt.com/",
+      "brand": "#10a37f",
+      "waitFor": 4000,
+      "fullPage": true
+    },
+    {
+      "slug": "claude",
+      "name": "Claude",
+      "company": "Anthropic",
+      "url": "https://claude.ai/",
+      "brand": "#d97757",
+      "waitFor": 4000,
+      "fullPage": true
+    },
+    {
+      "slug": "gemini",
+      "name": "Gemini",
+      "company": "Google",
+      "url": "https://gemini.google.com/",
+      "brand": "#4285f4",
+      "waitFor": 4500,
+      "fullPage": true
+    },
+    {
+      "slug": "perplexity",
+      "name": "Perplexity",
+      "company": "Perplexity AI",
+      "url": "https://www.perplexity.ai/",
+      "brand": "#20808d",
+      "waitFor": 4000,
+      "fullPage": true
+    },
+    {
+      "slug": "copilot",
+      "name": "Microsoft Copilot",
+      "company": "Microsoft",
+      "url": "https://copilot.microsoft.com/",
+      "brand": "#0a6ed1",
+      "waitFor": 4000,
+      "fullPage": true
+    },
+    {
+      "slug": "mistral",
+      "name": "Le Chat",
+      "company": "Mistral AI",
+      "url": "https://chat.mistral.ai/",
+      "brand": "#fa520f",
+      "waitFor": 4000,
+      "fullPage": true
+    },
+    {
+      "slug": "grok",
+      "name": "Grok",
+      "company": "xAI",
+      "url": "https://grok.com/",
+      "brand": "#111111",
+      "waitFor": 4000,
+      "fullPage": true
+    }
+  ]
+}
