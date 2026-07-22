@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" font-family="Inter, Google Sans, sans-serif">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4285f4"/>
+      <stop offset="0.5" stop-color="#9b72cb"/>
+      <stop offset="1" stop-color="#d96570"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="860" fill="#ffffff"/>
+  <!-- sidebar -->
+  <rect width="280" height="860" fill="#f0f4f9"/>
+  <rect x="24" y="28" width="150" height="40" rx="20" fill="#dde3ea"/>
+  <text x="46" y="53" font-size="14" fill="#444">＋ New chat</text>
+  <g fill="#e2e8f0">
+    <rect x="24" y="96" width="232" height="18" rx="6"/>
+    <rect x="24" y="126" width="200" height="18" rx="6"/>
+  </g>
+  <!-- main -->
+  <text x="330" y="300" font-size="46" font-weight="600" fill="url(#g)">Hello, Linda</text>
+  <text x="330" y="344" font-size="24" fill="#c4c7c5">How can I help you today?</text>
+  <!-- composer pill -->
+  <rect x="330" y="720" width="620" height="64" rx="32" fill="#f0f4f9"/>
+  <text x="360" y="758" font-size="16" fill="#5f6368">Ask Gemini</text>
+  <circle cx="912" cy="752" r="10" fill="#4285f4"/>
+  <!-- feature cards -->
+  <g>
+    <rect x="330" y="420" width="180" height="120" rx="16" fill="#f8fafc" stroke="#e4e9f0"/>
+    <rect x="530" y="420" width="180" height="120" rx="16" fill="#f8fafc" stroke="#e4e9f0"/>
+    <rect x="730" y="420" width="180" height="120" rx="16" fill="#f8fafc" stroke="#e4e9f0"/>
+  </g>
+  <text x="352" y="520" font-size="13" fill="#444">Draft an email</text>
+  <text x="552" y="520" font-size="13" fill="#444">Plan a trip</text>
+  <text x="752" y="520" font-size="13" fill="#444">Explain code</text>
+</svg>

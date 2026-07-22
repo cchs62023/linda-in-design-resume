@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" font-family="Inter, Segoe UI, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bggrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#effbf9"/>
+    </linearGradient>
+    <linearGradient id="brandgrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#14b8a6" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="800" fill="url(#bggrad)"/>
+  <!-- browser chrome -->
+  <rect x="0" y="0" width="1280" height="56" fill="#f1f1f1"/>
+  <circle cx="28" cy="28" r="6" fill="#ff5f57"/><circle cx="50" cy="28" r="6" fill="#febc2e"/><circle cx="72" cy="28" r="6" fill="#28c840"/>
+  <rect x="110" y="16" width="1050" height="24" rx="12" fill="#ffffff" stroke="#e6e6e6"/>
+  <text x="128" y="33" font-size="13" fill="#8a8a8a">🔒 you.com</text>
+  <!-- logo badge -->
+  <rect x="565" y="150" width="150" height="150" rx="34" fill="url(#brandgrad)"/>
+  <text x="640" y="252" text-anchor="middle" font-size="72" font-weight="700" fill="#ffffff">Y</text>
+  <!-- name + company -->
+  <text x="640" y="372" text-anchor="middle" font-size="52" font-weight="700" fill="#1a1a1a">You.com</text>
+  <text x="640" y="410" text-anchor="middle" font-size="20" fill="#8a8a8a">You.com</text>
+  <!-- mock composer -->
+  <rect x="360" y="470" width="560" height="64" rx="32" fill="#ffffff" stroke="#e6e6e6"/>
+  <text x="392" y="508" font-size="16" fill="#8a8a8a">Ask You.com…</text>
+  <circle cx="884" cy="502" r="18" fill="#14b8a6"/>
+  <path d="M884 494 l7 8 h-4 v7 h-6 v-7 h-4 z" fill="#fff"/>
+  <!-- mock chips -->
+  <g>
+    <rect x="450" y="566" width="120" height="40" rx="12" fill="none" stroke="#e6e6e6"/>
+    <rect x="586" y="566" width="120" height="40" rx="12" fill="none" stroke="#e6e6e6"/>
+    <rect x="722" y="566" width="120" height="40" rx="12" fill="none" stroke="#e6e6e6"/>
+  </g>
+  <!-- pending tag -->
+  <g>
+    <rect x="520" y="690" width="240" height="34" rx="17" fill="#14b8a6" opacity="0.12"/>
+    <circle cx="548" cy="707" r="5" fill="#14b8a6"/>
+    <text x="566" y="712" font-size="13" font-weight="600" fill="#14b8a6" letter-spacing="1">PREVIEW · LIVE CAPTURE PENDING</text>
+  </g>
+</svg>

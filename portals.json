@@ -1,0 +1,22 @@
+{
+  "$comment": "The AI / LLM company portals captured every week. Add or remove entries freely. 'waitFor' ms lets slow pages settle before the shot. 'fullPage' captures the entire scroll height.",
+  "portals": [
+    { "slug": "chatgpt",     "name": "ChatGPT",           "company": "OpenAI",        "url": "https://chatgpt.com/",            "brand": "#10a37f", "waitFor": 4000, "fullPage": true },
+    { "slug": "claude",      "name": "Claude",            "company": "Anthropic",     "url": "https://claude.ai/",              "brand": "#d97757", "waitFor": 4000, "fullPage": true },
+    { "slug": "gemini",      "name": "Gemini",            "company": "Google",        "url": "https://gemini.google.com/",      "brand": "#4285f4", "waitFor": 4500, "fullPage": true },
+    { "slug": "perplexity",  "name": "Perplexity",        "company": "Perplexity AI", "url": "https://www.perplexity.ai/",      "brand": "#20808d", "waitFor": 4000, "fullPage": true },
+    { "slug": "copilot",     "name": "Microsoft Copilot", "company": "Microsoft",     "url": "https://copilot.microsoft.com/",  "brand": "#0a6ed1", "waitFor": 4000, "fullPage": true },
+    { "slug": "mistral",     "name": "Le Chat",           "company": "Mistral AI",    "url": "https://chat.mistral.ai/",        "brand": "#fa520f", "waitFor": 4000, "fullPage": true },
+    { "slug": "grok",        "name": "Grok",              "company": "xAI",           "url": "https://grok.com/",               "brand": "#111111", "waitFor": 4000, "fullPage": true },
+    { "slug": "deepseek",    "name": "DeepSeek",          "company": "DeepSeek",      "url": "https://chat.deepseek.com/",      "brand": "#4d6bfe", "waitFor": 4000, "fullPage": true },
+    { "slug": "meta-ai",     "name": "Meta AI",           "company": "Meta",          "url": "https://www.meta.ai/",            "brand": "#0866ff", "waitFor": 4000, "fullPage": true },
+    { "slug": "manus",       "name": "Manus",             "company": "Manus AI",      "url": "https://manus.im/",               "brand": "#5a4d41", "waitFor": 4500, "fullPage": true },
+    { "slug": "poe",         "name": "Poe",               "company": "Quora",         "url": "https://poe.com/",                "brand": "#7c3aed", "waitFor": 4000, "fullPage": true },
+    { "slug": "character-ai","name": "Character.AI",      "company": "Character.AI",  "url": "https://character.ai/",           "brand": "#2d2b55", "waitFor": 4000, "fullPage": true },
+    { "slug": "huggingchat", "name": "HuggingChat",       "company": "Hugging Face",  "url": "https://huggingface.co/chat/",    "brand": "#ff9d00", "waitFor": 4000, "fullPage": true },
+    { "slug": "qwen",        "name": "Qwen Chat",         "company": "Alibaba",       "url": "https://chat.qwen.ai/",           "brand": "#615ced", "waitFor": 4000, "fullPage": true },
+    { "slug": "kimi",        "name": "Kimi",              "company": "Moonshot AI",   "url": "https://www.kimi.com/",           "brand": "#6c5ce7", "waitFor": 4000, "fullPage": true },
+    { "slug": "you",         "name": "You.com",           "company": "You.com",       "url": "https://you.com/",                "brand": "#14b8a6", "waitFor": 4000, "fullPage": true },
+    { "slug": "pi",          "name": "Pi",                "company": "Inflection AI", "url": "https://pi.ai/",                  "brand": "#d99a6c", "waitFor": 4000, "fullPage": true }
+  ]
+}
