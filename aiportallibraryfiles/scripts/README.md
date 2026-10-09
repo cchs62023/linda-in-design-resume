@@ -59,6 +59,27 @@ node capture.mjs --no-slack           # capture without notifying
 node capture.mjs --week 2026-07-13    # override the week label
 ```
 
+## Light & dark screenshots
+
+Each portal is captured twice — once with the browser set to
+`prefers-color-scheme: light` and once with `dark` — saved as
+`<slug>-<week>-light.png` and `<slug>-<week>-dark.png`. Only the primary
+(light) shot gets a design analysis, so the Claude API cost doesn't double.
+
+If the two shots come out the same (the portal ignores the system theme), the
+dark file is dropped and the capture is marked `"themeAware": false`. The
+gallery's **☀ Light / ☾ Dark** toggle then shows the light shot with a
+"Single theme" badge. Portals that only switch theme through their own in-page
+toggle will also be marked single-theme.
+
+Manifest entries keep `image` (the primary shot) for older pages, and add:
+
+```json
+"images":   { "light": "shots/claude-2026-10-05-light.png", "dark": "shots/claude-2026-10-05-dark.png" },
+"palettes": { "light": ["#…"], "dark": ["#…"] },
+"themeAware": true
+```
+
 ## Adding / removing portals
 
 Edit [`portals.json`](portals.json). Each entry:

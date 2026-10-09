@@ -3,8 +3,10 @@
  * Weekly AI-portal screenshot capture.
  *
  * For every portal in portals.json it:
- *   1. opens the page in headless Chromium and takes a full-page screenshot
- *   2. extracts a small dominant-colour palette from the image
+ *   1. opens the page in headless Chromium and takes a full-page screenshot,
+ *      once with prefers-color-scheme: light and once with dark
+ *   2. extracts a small dominant-colour palette from each image and flags
+ *      portals whose dark shot looks the same as the light one
  *   3. writes a brief design analysis (Claude vision if ANTHROPIC_API_KEY is
  *      set, otherwise a heuristic note built from the palette + page metadata)
  *   4. updates screenshots/manifest.json (newest first)
@@ -26,7 +28,7 @@
  */
 
 import { chromium } from 'playwright';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, unlink } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -37,6 +39,10 @@ const SHOTS_DIR = join(ROOT, 'screenshots', 'shots');
 const MANIFEST_PATH = join(ROOT, 'screenshots', 'manifest.json');
 
 const VIEWPORT = { width: 1280, height: 900 };
+const THEMES = ['light', 'dark'];
+// Mean-luminance gap (0–255) below which the dark shot is treated as a
+// duplicate of the light one, i.e. the portal ignores prefers-color-scheme.
+const THEME_LUMA_THRESHOLD = 12;
 const DEFAULT_SITE_BASE =
   process.env.SITE_BASE_URL ||
   'https://cchs62023.github.io/linda-in-design-resume/screenshots/';
@@ -64,7 +70,7 @@ function isoWeekMonday(d = new Date()) {
 
 // ----------------------------------------------------- colour palette ----
 /**
- * Sample a dominant-colour palette from a PNG by drawing it (downscaled) onto
+ * Sample a dominant-colour palette (plus mean luminance) from a PNG by drawing it (downscaled) onto
  * a canvas inside a throwaway page and quantising the pixels. No native deps.
  */
 async function extractPalette(browser, pngBuffer, count = 5) {
@@ -103,15 +109,24 @@ async function extractPalette(browser, pngBuffer, count = 5) {
           cur.b += data[i + 2];
           buckets.set(key, cur);
         }
+        let lumaSum = 0;
+        let lumaN = 0;
+        for (const c of buckets.values()) {
+          lumaSum += 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b;
+          lumaN += c.n;
+        }
         const sorted = [...buckets.values()].sort((a, b) => b.n - a.n).slice(0, count);
         const hex = (v) => Math.round(v).toString(16).padStart(2, '0');
-        return sorted.map((c) => `#${hex(c.r / c.n)}${hex(c.g / c.n)}${hex(c.b / c.n)}`);
+        return {
+          colors: sorted.map((c) => `#${hex(c.r / c.n)}${hex(c.g / c.n)}${hex(c.b / c.n)}`),
+          luma: lumaN ? lumaSum / lumaN : null,
+        };
       },
       { src: dataUrl, count }
     );
     return palette;
   } catch {
-    return [];
+    return { colors: [], luma: null };
   } finally {
     await page.close();
   }
@@ -193,18 +208,17 @@ async function claudeAnalysis(portal, pngBuffer, meta) {
 }
 
 // -------------------------------------------------------------- capture ----
-async function capturePortal(browser, portal, week) {
+async function shootTheme(browser, portal, week, theme) {
   const context = await browser.newContext({
     viewport: VIEWPORT,
     deviceScaleFactor: 1,
     userAgent:
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
     locale: 'en-US',
+    colorScheme: theme,
   });
   const page = await context.newPage();
-  const capturedAt = new Date().toISOString();
-  const file = `${portal.slug}-${week}.png`;
-  const outPath = join(SHOTS_DIR, file);
+  const file = `${portal.slug}-${week}-${theme}.png`;
   try {
     await page.goto(portal.url, { waitUntil: 'networkidle', timeout: 45000 }).catch(async () => {
       // fall back to a softer wait if networkidle never settles
@@ -215,57 +229,102 @@ async function capturePortal(browser, portal, week) {
     await dismissOverlays(page);
     const title = await page.title().catch(() => '');
     const buffer = await page.screenshot({ fullPage: portal.fullPage !== false, type: 'png' });
-    await writeFile(outPath, buffer);
+    await writeFile(join(SHOTS_DIR, file), buffer);
     const dims = await page.evaluate(() => ({
       width: document.documentElement.scrollWidth,
       height: document.documentElement.scrollHeight,
     }));
-    const palette = await extractPalette(browser, buffer);
-    const meta = { palette, width: dims.width || VIEWPORT.width, height: dims.height || VIEWPORT.height, title };
-    let analysis = await claudeAnalysis(portal, buffer, meta);
-    let analysisBy = 'claude';
-    if (!analysis) {
-      analysis = heuristicAnalysis(portal, meta);
-      analysisBy = 'heuristic';
-    }
-    console.log(`  ✓ ${portal.name}  (${meta.width}×${meta.height})`);
+    const { colors, luma } = await extractPalette(browser, buffer);
     return {
-      id: `${portal.slug}-${week}`,
-      slug: portal.slug,
-      portal: portal.name,
-      company: portal.company,
-      url: portal.url,
-      brand: portal.brand || palette[0] || '#888888',
-      week,
-      capturedAt,
+      buffer,
       image: `shots/${file}`,
-      width: meta.width,
-      height: meta.height,
-      palette,
-      analysis,
-      analysisBy,
-      status: 'ok',
-    };
-  } catch (e) {
-    console.warn(`  ✗ ${portal.name}: ${e.message}`);
-    return {
-      id: `${portal.slug}-${week}`,
-      slug: portal.slug,
-      portal: portal.name,
-      company: portal.company,
-      url: portal.url,
-      brand: portal.brand || '#888888',
-      week,
-      capturedAt,
-      image: null,
-      palette: [],
-      analysis: `Capture failed: ${e.message}`,
-      analysisBy: 'system',
-      status: 'error',
+      title,
+      palette: colors,
+      luma,
+      width: dims.width || VIEWPORT.width,
+      height: dims.height || VIEWPORT.height,
     };
   } finally {
     await context.close();
   }
+}
+
+async function capturePortal(browser, portal, week) {
+  const capturedAt = new Date().toISOString();
+  const base = {
+    id: `${portal.slug}-${week}`,
+    slug: portal.slug,
+    portal: portal.name,
+    company: portal.company,
+    url: portal.url,
+    week,
+    capturedAt,
+  };
+  const shots = {};
+  const errors = [];
+  for (const theme of THEMES) {
+    try {
+      shots[theme] = await shootTheme(browser, portal, week, theme);
+    } catch (e) {
+      errors.push(`${theme}: ${e.message}`);
+    }
+  }
+
+  const primary = shots.light || shots.dark;
+  if (!primary) {
+    console.warn(`  ✗ ${portal.name}: ${errors.join(' · ')}`);
+    return {
+      ...base,
+      brand: portal.brand || '#888888',
+      image: null,
+      images: { light: null, dark: null },
+      palette: [],
+      analysis: `Capture failed: ${errors.join(' · ')}`,
+      analysisBy: 'system',
+      status: 'error',
+    };
+  }
+
+  // A portal that ignores prefers-color-scheme renders the same page twice.
+  const themeAware =
+    shots.light && shots.dark && shots.light.luma != null && shots.dark.luma != null
+      ? Math.abs(shots.light.luma - shots.dark.luma) >= THEME_LUMA_THRESHOLD
+      : null;
+
+  // don't keep a duplicate PNG for portals without a dark theme
+  if (themeAware === false) await unlink(join(ROOT, 'screenshots', shots.dark.image)).catch(() => {});
+
+  // one analysis per portal (of the primary shot) keeps the API cost flat
+  const meta = { palette: primary.palette, width: primary.width, height: primary.height, title: primary.title };
+  let analysis = await claudeAnalysis(portal, primary.buffer, meta);
+  let analysisBy = 'claude';
+  if (!analysis) {
+    analysis = heuristicAnalysis(portal, meta);
+    analysisBy = 'heuristic';
+  }
+  const themeNote = themeAware === false ? ' · single theme' : '';
+  console.log(`  ✓ ${portal.name}  (${meta.width}×${meta.height}; ${Object.keys(shots).join('+')}${themeNote})`);
+  if (errors.length) console.warn(`    ! ${errors.join(' · ')}`);
+  return {
+    ...base,
+    brand: portal.brand || primary.palette[0] || '#888888',
+    image: primary.image,
+    images: {
+      light: shots.light?.image || null,
+      dark: themeAware === false ? null : shots.dark?.image || null,
+    },
+    themeAware,
+    width: meta.width,
+    height: meta.height,
+    palette: primary.palette,
+    palettes: {
+      light: shots.light?.palette || [],
+      dark: shots.dark?.palette || [],
+    },
+    analysis,
+    analysisBy,
+    status: 'ok',
+  };
 }
 
 async function dismissOverlays(page) {

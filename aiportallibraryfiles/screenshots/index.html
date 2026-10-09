@@ -93,6 +93,10 @@
     .chip .dot { width: 9px; height: 9px; border-radius: 50%; }
     .chip .count { opacity: 0.6; font-size: 0.75rem; }
     .spacer { flex: 1; }
+    .theme-toggle { display: inline-flex; border: 1px solid var(--border-strong); background: var(--panel); border-radius: 999px; padding: 3px; }
+    .theme-toggle button { font-family: inherit; font-size: 0.8rem; color: var(--text-secondary); background: none; border: 0; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: all .18s; }
+    .theme-toggle button:hover { color: var(--text-primary); }
+    .theme-toggle button[aria-pressed="true"] { background: var(--accent); color: #101010; font-weight: 600; }
     select.week-select {
       font-family: inherit; font-size: 0.82rem; color: var(--text-secondary);
       background: var(--panel); border: 1px solid var(--border-strong); border-radius: 999px;
@@ -119,6 +123,7 @@
     .shot .zoom { position: absolute; right: 10px; bottom: 10px; width: 30px; height: 30px; border-radius: 8px; background: rgba(0,0,0,0.55); display: grid; place-items: center; color: #fff; font-size: 0.8rem; opacity: 0; transition: opacity .2s; }
     .card:hover .shot .zoom { opacity: 1; }
     .badge-sample { position: absolute; top: 10px; left: 10px; font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #101010; background: var(--accent); padding: 3px 8px; border-radius: 6px; }
+    .badge-theme { position: absolute; top: 10px; right: 10px; font-size: 0.62rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; color: #fff; background: rgba(0,0,0,0.65); border: 1px solid var(--border-strong); padding: 3px 8px; border-radius: 6px; }
     .badge-error { position: absolute; inset: 0; display: grid; place-items: center; color: #ff8f8f; font-size: 0.85rem; background: repeating-linear-gradient(45deg, #1a1216, #1a1216 12px, #201418 12px, #201418 24px); }
 
     .card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
@@ -192,6 +197,10 @@
     <div class="wrap">
       <div id="portal-chips" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
       <span class="spacer"></span>
+      <div class="theme-toggle" role="group" aria-label="Screenshot theme">
+        <button type="button" data-theme="light">☀ Light</button>
+        <button type="button" data-theme="dark">☾ Dark</button>
+      </div>
       <select id="week-select" class="week-select" aria-label="Filter by week"></select>
     </div>
   </nav>
@@ -221,7 +230,36 @@
 
   <script>
     const PORTAL_QUERY = new URLSearchParams(location.search);
-    const state = { data: null, portal: 'all', week: PORTAL_QUERY.get('week') || 'all' };
+    const savedTheme = (() => { try { return localStorage.getItem('shot-theme'); } catch { return null; } })();
+    const state = {
+      data: null,
+      portal: 'all',
+      week: PORTAL_QUERY.get('week') || 'all',
+      theme: PORTAL_QUERY.get('theme') || savedTheme || 'light',
+      lightboxCap: null,
+    };
+    if (state.theme !== 'dark') state.theme = 'light';
+
+    // Older captures only have `image`; newer ones carry `images.light` / `images.dark`.
+    // Falls back to the other theme when the requested one wasn't captured.
+    function shotFor(c, theme) {
+      const imgs = c.images || {};
+      const other = theme === 'dark' ? 'light' : 'dark';
+      if (imgs[theme]) return { src: imgs[theme], theme, fallback: false };
+      const src = imgs[other] || c.image;
+      return src ? { src, theme: imgs[other] ? other : null, fallback: true } : null;
+    }
+    const paletteFor = (c, theme) => (c.palettes && c.palettes[theme] && c.palettes[theme].length ? c.palettes[theme] : c.palette) || [];
+
+    function setTheme(theme) {
+      state.theme = theme;
+      try { localStorage.setItem('shot-theme', theme); } catch {}
+      document.querySelectorAll('.theme-toggle button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.theme === theme)));
+      if (state.data) render();
+      if (state.lightboxCap) openLightbox(state.lightboxCap);
+    }
+    document.querySelectorAll('.theme-toggle button').forEach((b) => { b.onclick = () => setTheme(b.dataset.theme); });
+    setTheme(state.theme);
 
     const fmtWeek = (iso) => {
       if (!iso) return 'Undated';
@@ -318,11 +356,15 @@
 
     function card(c) {
       const brand = c.brand || '#888';
-      const shot = c.status === 'ok' && c.image
-        ? `<img loading="lazy" src="${esc(c.image)}" alt="${esc(c.portal)} portal screenshot, week of ${esc(c.week)}" />
-           <div class="zoom">⤢</div>${c.sample ? '<span class="badge-sample">Sample</span>' : ''}`
+      const s = c.status === 'ok' ? shotFor(c, state.theme) : null;
+      const themeBadge = s && s.fallback && c.images
+        ? `<span class="badge-theme">${c.themeAware === false ? 'Single theme' : 'No ' + state.theme + ' shot'}</span>`
+        : '';
+      const shot = s
+        ? `<img loading="lazy" src="${esc(s.src)}" alt="${esc(c.portal)} portal screenshot (${esc(s.theme || 'default')} theme), week of ${esc(c.week)}" />
+           <div class="zoom">⤢</div>${c.sample ? '<span class="badge-sample">Sample</span>' : ''}${themeBadge}`
         : `<div class="badge-error">⚠ ${esc(c.error || 'capture failed')}</div>`;
-      const palette = (c.palette || []).slice(0, 5).map((p) => `<span style="background:${esc(p)}" title="${esc(p)}"></span>`).join('');
+      const palette = paletteFor(c, state.theme).slice(0, 5).map((p) => `<span style="background:${esc(p)}" title="${esc(p)}"></span>`).join('');
       const byMap = { claude: 'Claude', heuristic: 'auto', sample: 'sample', manual: 'Linda', system: 'system' };
       return `<article class="card">
         <div class="shot" role="button" tabindex="0" aria-label="Enlarge ${esc(c.portal)} screenshot">${shot}</div>
@@ -346,16 +388,19 @@
     }
 
     function openLightbox(c) {
-      if (!c || c.status !== 'ok' || !c.image) return;
+      const s = c && c.status === 'ok' ? shotFor(c, state.theme) : null;
+      if (!s) return;
+      state.lightboxCap = c;
       document.getElementById('lb-title').textContent = c.portal + ' · ' + (c.company || '');
-      document.getElementById('lb-date').textContent = 'Week of ' + fmtWeek(c.week);
+      document.getElementById('lb-date').textContent = 'Week of ' + fmtWeek(c.week) + (s.theme ? ' · ' + s.theme + ' theme' : '');
       const img = document.getElementById('lb-img');
-      img.src = c.image; img.alt = c.portal + ' full-page screenshot';
+      img.src = s.src; img.alt = c.portal + ' full-page screenshot' + (s.theme ? ' (' + s.theme + ' theme)' : '');
       document.getElementById('lb-analysis').textContent = c.analysis || '';
       document.getElementById('lightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeLightbox() {
+      state.lightboxCap = null;
       document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
     }
